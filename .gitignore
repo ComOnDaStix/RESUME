@@ -6,12 +6,13 @@ Assests/*.JPEG
 Assests/*.png
 Assests/*.PNG
 
-# Original videos (too large for GitHub — host on Vimeo/YouTube and embed)
+# Original videos (only the originals — compressed web versions in Assests/web/videos/ ARE committed)
 Assests/*.mp4
 Assests/*.MP4
 Assests/*.mov
 Assests/*.MOV
 Assests/*.webm
+!Assests/web/videos/*.mp4
 
 # Duplicate poster folder (use Assests/web/posters instead)
 Assests/posters/
