@@ -320,16 +320,19 @@
   #lightbox button:active { transform: scale(.94); }
   #lightbox #lb-prev:hover { transform: translate(-2px, -50%); }
   #lightbox #lb-next:hover { transform: translate(2px, -50%); }
-  /* Mobile: keep arrows visible with strong contrast so tap zones are obvious */
+  /* Mobile: tap-the-image is the primary nav; arrows become tiny minimal direction hints */
   @media (max-width: 767px) {
-    #lightbox .lb-stage > img { max-width: 86vw; max-height: 74vh; }
+    #lightbox .lb-stage > img { max-width: 88vw; max-height: 76vh; }
     #lightbox #lb-prev, #lightbox #lb-next {
-      width: 48px; height: 48px;
-      background: rgba(14,14,14,.92);
-      border: 1.5px solid rgba(199,90,74,.55);
-      box-shadow: 0 6px 18px -4px rgba(0,0,0,.6);
+      width: 28px; height: 28px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: rgba(242,233,205,.45);
     }
-    #lightbox #lb-prev svg, #lightbox #lb-next svg { width: 22px; height: 22px; }
+    #lightbox #lb-prev svg, #lightbox #lb-next svg { width: 18px; height: 18px; }
+    #lightbox #lb-prev { left: 6px; }
+    #lightbox #lb-next { right: 6px; }
     #lightbox #lb-close {
       width: 48px; height: 48px;
       background: rgba(14,14,14,.92);
