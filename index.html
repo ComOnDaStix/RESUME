@@ -320,25 +320,32 @@
   #lightbox button:active { transform: scale(.94); }
   #lightbox #lb-prev:hover { transform: translate(-2px, -50%); }
   #lightbox #lb-next:hover { transform: translate(2px, -50%); }
-  /* Mobile: tap-the-image is the primary nav; arrows become tiny minimal direction hints */
+  /* Mobile: tap-the-image is the only nav; arrows hidden; small "tap" hint at top */
   @media (max-width: 767px) {
-    #lightbox .lb-stage > img { max-width: 88vw; max-height: 76vh; }
-    #lightbox #lb-prev, #lightbox #lb-next {
-      width: 28px; height: 28px;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      color: rgba(242,233,205,.45);
-    }
-    #lightbox #lb-prev svg, #lightbox #lb-next svg { width: 18px; height: 18px; }
-    #lightbox #lb-prev { left: 6px; }
-    #lightbox #lb-next { right: 6px; }
+    #lightbox .lb-stage > img { max-width: 90vw; max-height: 76vh; }
+    #lightbox #lb-prev, #lightbox #lb-next { display: none !important; }
     #lightbox #lb-close {
       width: 48px; height: 48px;
       background: rgba(14,14,14,.92);
       border: 1.5px solid rgba(242,233,205,.3);
     }
-    #lightbox .swipe-hint { display: inline-block; }
+    #lightbox .swipe-hint { display: none; }
+    #lightbox .tap-hint { display: block; }
+  }
+  /* Top hint: "TAP FOR NEXT" — only shown on mobile */
+  #lightbox .tap-hint {
+    display: none;
+    position: fixed;
+    top: calc(28px + env(safe-area-inset-top, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 91;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(242,233,205,.55);
+    pointer-events: none;
   }
   #lightbox .swipe-hint {
     display: none;
@@ -1523,6 +1530,7 @@
     overlay.setAttribute('aria-label', 'Image viewer');
     overlay.className = 'fixed inset-0 z-[100] flex items-center justify-center px-4';
     overlay.innerHTML = `
+      <span class="tap-hint" aria-hidden="true">Tap for next</span>
       <button id="lb-close" type="button" aria-label="Close" class="absolute top-5 right-5 sm:top-7 sm:right-7 w-11 h-11 rounded-full flex items-center justify-center text-cream/85">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       </button>

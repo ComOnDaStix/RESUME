@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git commit -m ' *)",
       "Bash(git commit -m 'Fix Video tile placeholder + show lightbox arrows on mobile *)",
-      "Bash(git commit -m 'Lightbox arrows: tiny minimal hints on mobile *)"
+      "Bash(git commit -m 'Lightbox arrows: tiny minimal hints on mobile *)",
+      "Bash(git commit -m 'Lightbox mobile: hide arrows entirely, add '\\\\''Tap for next'\\\\'' hint at top *)"
     ]
   }
 }
