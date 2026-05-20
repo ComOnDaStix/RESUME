@@ -320,10 +320,16 @@
   #lightbox button:active { transform: scale(.94); }
   #lightbox #lb-prev:hover { transform: translate(-2px, -50%); }
   #lightbox #lb-next:hover { transform: translate(2px, -50%); }
-  /* Mobile: hide side arrows entirely, lean into swipe (matches native photo app UX) */
+  /* Mobile: keep arrows visible with strong contrast so tap zones are obvious */
   @media (max-width: 767px) {
-    #lightbox .lb-stage > img { max-width: 90vw; max-height: 76vh; }
-    #lightbox #lb-prev, #lightbox #lb-next { display: none !important; }
+    #lightbox .lb-stage > img { max-width: 86vw; max-height: 74vh; }
+    #lightbox #lb-prev, #lightbox #lb-next {
+      width: 48px; height: 48px;
+      background: rgba(14,14,14,.92);
+      border: 1.5px solid rgba(199,90,74,.55);
+      box-shadow: 0 6px 18px -4px rgba(0,0,0,.6);
+    }
+    #lightbox #lb-prev svg, #lightbox #lb-next svg { width: 22px; height: 22px; }
     #lightbox #lb-close {
       width: 48px; height: 48px;
       background: rgba(14,14,14,.92);
@@ -718,7 +724,7 @@
         </a>
         <a href="#video" class="cat-tile cat-tile-wide col-span-2">
           <div class="cat-head"><span class="label-rust">Video</span><span class="dash">/</span><span class="label-rust">05</span></div>
-          <div class="img-frame"><img src="Assests/web/posters/Leons 4k.MP4.png" alt="Video" loading="lazy" decoding="async" /></div>
+          <div class="img-frame"><img src="Assests/web/posters/Leons 4k.mp4.jpg" alt="Video" loading="lazy" decoding="async" /></div>
         </a>
       </div>
     </div>
