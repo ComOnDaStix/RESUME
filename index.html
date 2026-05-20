@@ -1,0 +1,1688 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0E0E0E" />
+<title>Com, Photographer &amp; Videographer, Milwaukee</title>
+<meta name="description" content="Com, self-taught photographer and videographer based in Milwaukee. Editorial, brand campaigns, portraits, lifestyle, weddings, and video." />
+
+<script>
+  // Always start at the top on page load / refresh, no scroll restoration
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:     '#0E0E0E',
+          smoke:   '#181818',
+          cream:   '#F2E9CD',
+          paper:   '#F8F1DA',
+          mute:    '#8C8472',
+          rust:    '#C75A4A',
+          dim:     '#3D3933',
+        },
+        fontFamily: {
+          display: ['Anton','Impact','sans-serif'],
+          sans:    ['Inter','system-ui','sans-serif'],
+          script:  ['Caveat','cursive'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  html, body { background-color: #0E0E0E; color: #F2E9CD; }
+  body { font-family: 'Inter', system-ui, sans-serif; font-weight: 400; -webkit-font-smoothing: antialiased; }
+
+  /* Calmer matte backdrop, single soft pool + grain (less silk-y) */
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(40,38,33,.30) 0%, transparent 65%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(25,22,20,.20) 0%, transparent 65%);
+  }
+  body::after {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.04;
+    mix-blend-mode: overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  main, header, section, footer { position: relative; z-index: 1; }
+
+  /* Type system */
+  .display { font-family: 'Anton', Impact, sans-serif; text-transform: uppercase; letter-spacing: 0.005em; line-height: 0.92; font-weight: 400; }
+  .display-tight { letter-spacing: -0.01em; }
+  .script { font-family: 'Caveat', cursive; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #8C8472; font-weight: 500; }
+  .eyebrow-rust { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C75A4A; font-weight: 600; }
+  .label-cream { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #F2E9CD; font-weight: 600; }
+  .label-rust  { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #C75A4A; font-weight: 600; }
+
+  /* Section index, small rust-tinted marker at top of each page */
+  .section-mark { display: inline-flex; align-items: center; gap: 14px; }
+  .section-mark::before {
+    content:''; display: inline-block; width: 36px; height: 1px; background: #C75A4A;
+  }
+
+  /* Buttons */
+  .btn { transition: transform .35s cubic-bezier(.2,.8,.2,1), background-color .25s, color .25s, border-color .25s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-cream { background:#F2E9CD; color:#0E0E0E; border:1px solid #F2E9CD; }
+  .btn-cream:hover { background:transparent; color:#F2E9CD; }
+  .btn-ghost { background:transparent; color:#F2E9CD; border:1px solid rgba(242,233,205,.4); }
+  .btn-ghost:hover { background:#F2E9CD; color:#0E0E0E; border-color:#F2E9CD; }
+  *:focus-visible{ outline: 2px solid #C75A4A; outline-offset: 3px; }
+
+  /* Nav */
+  .navlink { position: relative; padding-bottom: 2px; transition: color .2s; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .navlink::after {
+    content:''; position:absolute; left:0; right:0; bottom:-2px; height:1px; background: currentColor;
+    transform-origin: left; transform: scaleX(0); transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .navlink:hover::after { transform: scaleX(1); }
+
+  /* Image frames */
+  .img-frame   { position: relative; overflow: hidden; background: #1a1814; }
+  .img-frame img { display:block; width:100%; height:100%; object-fit: cover; }
+  .img-frame::after {
+    content:''; position:absolute; inset:0; pointer-events:none; mix-blend-mode: multiply; opacity:.06;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* "Matted print" frame, clean cream border, no caption space, no rotation */
+  .matted {
+    background: #F2E9CD;
+    padding: 12px;
+    box-shadow: 0 30px 70px -25px rgba(0,0,0,.7), 0 1px 0 rgba(255,255,255,.04) inset;
+  }
+  .matted .img-frame { background: #0E0E0E; }
+
+  /* Underline link */
+  .ulink { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .4s cubic-bezier(.2,.8,.2,1); padding-bottom: 3px; }
+  .ulink:hover { background-size: 100% 1px; }
+
+  /* Hairlines */
+  .rule { height: 1px; background: rgba(242,233,205,.14); }
+  .rule-rust { height: 1px; background: rgba(199,90,74,.5); }
+
+  /* Section container */
+  .page { padding: 100px 24px 80px; }
+  @media (min-width: 768px)  { .page { padding: 130px 40px 100px; } }
+  @media (min-width: 1024px) { .page { padding: 160px 56px 120px; } }
+  .page-inner { max-width: 1400px; margin: 0 auto; }
+
+  /* Vertical text */
+  .vert { writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* Hero load animations */
+  @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+  .fade-up { opacity: 0; animation: fadeUp 1.05s cubic-bezier(.2,.8,.2,1) forwards; }
+  .fade-up-1 { animation-delay: 0.05s; }
+  .fade-up-2 { animation-delay: 0.20s; }
+  .fade-up-3 { animation-delay: 0.35s; }
+  .fade-up-4 { animation-delay: 0.50s; }
+  .fade-up-5 { animation-delay: 0.65s; }
+  .fade-up-6 { animation-delay: 0.80s; }
+
+  .stagger > span { display: inline-block; opacity: 0; animation: fadeUp 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
+  .stagger > span:nth-child(1) { animation-delay: 0.10s; }
+  .stagger > span:nth-child(2) { animation-delay: 0.22s; }
+  .stagger > span:nth-child(3) { animation-delay: 0.34s; }
+
+  /* Cover, cinematic letter reveal with blur clearing */
+  @keyframes letterIn {
+    0%   { opacity: 0; transform: translateY(70px) scale(.96); filter: blur(18px); }
+    55%  { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+  .com-reveal > span { display: inline-block; opacity: 0; animation: letterIn 1.4s cubic-bezier(.16,.84,.3,1) forwards; }
+  .com-reveal > span:nth-child(1) { animation-delay: 0.20s; }
+  .com-reveal > span:nth-child(2) { animation-delay: 0.42s; }
+  .com-reveal > span:nth-child(3) { animation-delay: 0.64s; }
+
+  /* Cover, curtain reveal for the matted portrait (wipes up from below) */
+  @keyframes curtainIn {
+    0%   { clip-path: inset(100% 0 0 0); opacity: 0; transform: scale(.985); }
+    12%  { opacity: 1; }
+    100% { clip-path: inset(0 0 0 0); opacity: 1; transform: scale(1); }
+  }
+  .curtain-reveal {
+    clip-path: inset(100% 0 0 0); opacity: 0;
+    animation: curtainIn 1.45s cubic-bezier(.7,0,.2,1) forwards;
+    animation-delay: 1.0s;
+  }
+
+  /* Cover, rust hairline draws in left→right */
+  @keyframes lineDrawX { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+  .line-draw { transform: scaleX(0); transform-origin: left; animation: lineDrawX .95s cubic-bezier(.7,0,.2,1) forwards; animation-delay: 1.05s; }
+
+  .fade-on-view {
+    opacity: 0;
+    transform: translate3d(0, 32px, 0);
+    transition: opacity 1.15s cubic-bezier(.16,.84,.3,1), transform 1.15s cubic-bezier(.16,.84,.3,1);
+    will-change: opacity, transform;
+  }
+  .fade-on-view.in-view { opacity: 1; transform: translate3d(0, 0, 0); }
+
+  /* Anchor scroll offset so fixed nav doesn't cover headings (includes notch on iPhone) */
+  section[id] { scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px)); }
+
+  /* iPhone safe-area support: respect notch, Dynamic Island, and home indicator */
+  #nav { padding-top: env(safe-area-inset-top, 0px); }
+  #menu-close { top: calc(16px + env(safe-area-inset-top, 0px)); }
+  @media (min-width: 640px) { #menu-close { top: calc(20px + env(safe-area-inset-top, 0px)); } }
+  @media (min-width: 1024px) { #menu-close { top: calc(22px + env(safe-area-inset-top, 0px)); } }
+  #lightbox #lb-close { top: calc(20px + env(safe-area-inset-top, 0px)) !important; }
+  @media (min-width: 640px) { #lightbox #lb-close { top: calc(28px + env(safe-area-inset-top, 0px)) !important; } }
+  footer { padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
+  /* Page-inner side padding scales with safe-area-inset for landscape iPhones */
+  .page-inner { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+
+  /* Cover top padding: nav height + safe area + breathing gap */
+  .cover-pad { padding-top: calc(120px + env(safe-area-inset-top, 0px)); }
+  @media (min-width: 640px) { .cover-pad { padding-top: calc(140px + env(safe-area-inset-top, 0px)); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up, .stagger > span, .fade-on-view, .com-reveal > span, .curtain-reveal, .line-draw {
+      animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important;
+    }
+  }
+
+  /* Sticky nav */
+  #nav { transition: background-color .3s ease, backdrop-filter .3s ease, border-color .3s ease; border-bottom: 1px solid transparent; }
+  #nav.scrolled {
+    background-color: rgba(14,14,14,.78);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom-color: rgba(242,233,205,.08);
+  }
+
+  /* Even portrait grid */
+  .grid-portrait > * { aspect-ratio: 4 / 5; }
+  .grid-square > * { aspect-ratio: 1 / 1; }
+
+  /* Mosaic grid, uniform portraits + select hero spans on desktop */
+  .grid-mosaic > * { aspect-ratio: 4 / 5; }
+  @media (min-width: 768px) {
+    .grid-mosaic > .hero-2 { aspect-ratio: 8 / 5; grid-column: span 2; }
+  }
+
+  /* Trimmed galleries — show first 12, "View More" reveals the rest */
+  .gallery-trim > .img-frame:nth-child(n+13) { display: none; }
+  .gallery-trim.is-expanded > .img-frame { display: block; }
+  .view-more-wrap { text-align: center; margin-top: 2rem; }
+  @media (min-width: 768px) { .view-more-wrap { margin-top: 2.5rem; } }
+  .view-more-btn {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 13px 28px;
+    border: 1px solid rgba(242,233,205,.22);
+    background: transparent; color: #F2E9CD;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color .25s, color .25s, background-color .25s, transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .view-more-btn:hover, .view-more-btn:focus-visible {
+    border-color: #C75A4A; color: #C75A4A; transform: translateY(-1px);
+  }
+  .view-more-btn .count { color: #C75A4A; font-weight: 600; }
+
+  .video-tile video { background: #000; }
+
+  /* hero scroller, JS-driven auto-scroll with native horizontal scroll + drag-to-slide */
+  #hero-scroller {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-x;
+  }
+  #hero-scroller::-webkit-scrollbar { display: none; }
+  #hero-scroller.is-dragging { cursor: grabbing; }
+  #hero-scroller.is-dragging .hero-tile { pointer-events: none; }
+  .hero-scroll-track { will-change: transform; }
+  .hero-scroll-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+  .hero-tile { transition: transform .5s cubic-bezier(.2,.8,.2,1), filter .5s; cursor: zoom-in; }
+  .hero-tile:hover { transform: translateY(-4px); filter: brightness(1.08); }
+  #hero-scroller.is-dragging .hero-tile:hover { transform: none; filter: none; }
+
+  /* Category tile */
+  .cat-tile { background: #F2E9CD; color: #0E0E0E; padding: 18px; display: block; }
+  .cat-tile .img-frame { aspect-ratio: 1/1; background: #0E0E0E; }
+  .cat-tile-wide .img-frame { aspect-ratio: 16/9; }
+  .cat-head { display:flex; align-items: baseline; justify-content: center; gap: 14px; margin-bottom: 14px; }
+  .cat-head .dash { color: #C75A4A; opacity: .55; }
+
+  /* About placeholder */
+  .placeholder-frame {
+    background: #1a1814;
+    border: 1px dashed rgba(242,233,205,.20);
+    display: flex; align-items: center; justify-content: center;
+    color: #8C8472;
+  }
+
+  /* Lightbox */
+  #lightbox {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s cubic-bezier(.2,.8,.2,1);
+    background: rgba(14,14,14,.94);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+  }
+  #lightbox.is-open { opacity: 1; pointer-events: auto; }
+  #lightbox figure { margin: 0; }
+  #lightbox .lb-stage { display: grid; place-items: center; width: 100%; }
+  #lightbox .lb-stage > img {
+    grid-area: 1 / 1;
+    max-width: 92vw;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translate3d(0,0,0);
+    transition: opacity .18s ease-out;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.7);
+  }
+  #lightbox .lb-stage > img.is-active { opacity: 1; }
+  #lightbox .lb-stage > img.is-dragging { transition: none; }
+  #lightbox button {
+    background: rgba(14,14,14,.78);
+    border: 1px solid rgba(242,233,205,.22);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background-color .25s, color .25s, border-color .25s, transform .25s cubic-bezier(.2,.8,.2,1);
+    color: #F2E9CD;
+  }
+  #lightbox button:hover {
+    background: rgba(199,90,74,.28);
+    border-color: rgba(199,90,74,.6);
+    color: #F2E9CD;
+  }
+  #lightbox button:active { transform: scale(.94); }
+  #lightbox #lb-prev:hover { transform: translate(-2px, -50%); }
+  #lightbox #lb-next:hover { transform: translate(2px, -50%); }
+  /* Mobile: hide side arrows entirely, lean into swipe (matches native photo app UX) */
+  @media (max-width: 767px) {
+    #lightbox .lb-stage > img { max-width: 90vw; max-height: 76vh; }
+    #lightbox #lb-prev, #lightbox #lb-next { display: none !important; }
+    #lightbox #lb-close {
+      width: 48px; height: 48px;
+      background: rgba(14,14,14,.92);
+      border: 1.5px solid rgba(242,233,205,.3);
+    }
+    #lightbox .swipe-hint { display: inline-block; }
+  }
+  #lightbox .swipe-hint {
+    display: none;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(242,233,205,.4);
+    margin-top: 6px;
+  }
+  #lightbox #lb-counter {
+    background: rgba(14,14,14,.55);
+    border: 1px solid rgba(242,233,205,.10);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  /* iOS-safe scroll lock: position:fixed + width:100% prevents both vertical AND horizontal pan on iOS Safari */
+  body.lb-open {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  #lightbox { overflow: hidden; max-width: 100vw; }
+  .cursor-zoom-in { cursor: zoom-in; }
+
+  /* Toast for the "Email for a Quote" copy-to-clipboard fallback */
+  #toast {
+    position: fixed;
+    left: 50%; bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%) translateY(20px);
+    z-index: 200;
+    padding: 14px 22px;
+    background: #F2E9CD;
+    color: #0E0E0E;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 999px;
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease, transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  #toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* While a programmatic scroll is in flight, strip every expensive effect that re-paints per frame.
+     This is the difference between 60fps and stuttering on mobile. */
+  body.is-scrolling .fade-on-view { transition: none !important; }
+  body.is-scrolling .fade-on-view.in-view { opacity: 1 !important; transform: none !important; }
+  /* backdrop-filter: blur is the single most expensive thing on a scrolling page — disable it */
+  body.is-scrolling #nav,
+  body.is-scrolling #nav.scrolled {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(14,14,14,.94);
+  }
+  /* SVG noise filters composite on every paint — drop them */
+  body.is-scrolling::after,
+  body.is-scrolling .img-frame::after { display: none !important; }
+  /* Tile hover transitions and the marquee's per-frame work shouldn't run during nav */
+  body.is-scrolling .hero-tile { transition: none !important; }
+  body.is-scrolling .matted { box-shadow: none !important; }
+
+  /* Fullscreen menu overlay */
+  #menu-overlay {
+    position: fixed; inset: 0; z-index: 90;
+    display: flex; align-items: center; justify-content: center;
+    padding: 64px 24px;
+    background: rgba(14,14,14,.97);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    opacity: 0; pointer-events: none;
+    transition: opacity .4s cubic-bezier(.2,.8,.2,1);
+    overflow-y: auto;
+  }
+  @media (min-width: 768px) { #menu-overlay { padding: 80px 40px; } }
+  #menu-overlay.is-open { opacity: 1; pointer-events: auto; }
+  #menu-overlay::before {
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.05;
+    mix-blend-mode: overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  #menu-close {
+    position: fixed; top: 16px; right: 24px; z-index: 91;
+  }
+  @media (min-width: 640px) { #menu-close { top: 20px; right: 40px; } }
+  @media (min-width: 1024px) { #menu-close { top: 22px; right: 56px; } }
+
+  .menu-list { width: 100%; max-width: 720px; margin: auto; }
+  .menu-list ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .menu-list li { display: flex; }
+
+  .menu-item {
+    font-family: 'Anton', Impact, sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(32px, 5.4vh, 56px);
+    line-height: 1.08;
+    letter-spacing: 0.005em;
+    color: #F2E9CD;
+    display: inline-flex; align-items: baseline; gap: 28px;
+    white-space: nowrap;
+    transition: color .35s ease, transform .4s cubic-bezier(.2,.8,.2,1);
+    opacity: 0; transform: translateY(20px);
+    padding: 8px 0;
+    cursor: pointer;
+    width: 100%;
+  }
+  @media (min-width: 768px) { .menu-item { gap: 36px; padding: 10px 0; } }
+  .menu-item:hover, .menu-item:focus-visible { color: #C75A4A; transform: translateY(0) translateX(10px); }
+  .menu-item .num {
+    font-size: .26em; letter-spacing: 0.06em; color: #C75A4A;
+    font-family: 'Inter', sans-serif; font-weight: 500;
+    flex-shrink: 0; width: 1.5em;
+    opacity: .85;
+  }
+  .menu-item .label { flex: 1; }
+
+  #menu-overlay.is-open .menu-item { opacity: 1; transform: translateY(0); }
+  #menu-overlay.is-open li:nth-child(1) .menu-item { transition-delay: 0.06s; }
+  #menu-overlay.is-open li:nth-child(2) .menu-item { transition-delay: 0.10s; }
+  #menu-overlay.is-open li:nth-child(3) .menu-item { transition-delay: 0.14s; }
+  #menu-overlay.is-open li:nth-child(4) .menu-item { transition-delay: 0.18s; }
+  #menu-overlay.is-open li:nth-child(5) .menu-item { transition-delay: 0.22s; }
+  #menu-overlay.is-open li:nth-child(6) .menu-item { transition-delay: 0.26s; }
+  #menu-overlay.is-open li:nth-child(7) .menu-item { transition-delay: 0.30s; }
+  #menu-overlay.is-open li:nth-child(8) .menu-item { transition-delay: 0.34s; }
+  #menu-overlay.is-open li:nth-child(9) .menu-item { transition-delay: 0.38s; }
+  body.menu-open { overflow: hidden; }
+  @media (prefers-reduced-motion: reduce) {
+    .menu-item { transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
+
+  /* Mobile: center text content in stacked sections (≤1023px, before lg breakpoint) */
+  @media (max-width: 1023px) {
+    .mobile-center { text-align: center; }
+    .mobile-center .rule-rust,
+    .mobile-center > .flex,
+    .mobile-center .flex.items-center { justify-content: center; }
+    .mobile-center .max-w-xl,
+    .mobile-center .max-w-md,
+    .mobile-center .max-w-2xl,
+    .mobile-center .max-w-sm,
+    .mobile-center .max-w-\[620px\] { margin-left: auto; margin-right: auto; }
+    .mobile-center > .matted,
+    .mobile-center .matted { margin-left: auto; margin-right: auto; }
+    .mobile-center ul { display: inline-block; text-align: left; }
+  }
+
+  /* Contact form */
+  .cf-input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(242,233,205,.18);
+    padding: 12px 0;
+    color: #F2E9CD;
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color .3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .cf-input::placeholder { color: #8C8472; }
+  .cf-input:focus {
+    outline: none;
+    border-bottom-color: #C75A4A;
+  }
+  .cf-textarea { resize: vertical; min-height: 120px; }
+  select.cf-input {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%23C75A4A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 28px;
+    cursor: pointer;
+  }
+  select.cf-input option { background: #181818; color: #F2E9CD; }
+  .cf-status-ok { color: #F2E9CD; }
+</style>
+</head>
+
+<body class="text-cream">
+
+<!-- ─────────────────────────  HEADER  ───────────────────────── -->
+<header id="nav" class="fixed top-0 left-0 right-0 z-50">
+  <div class="px-6 sm:px-10 lg:px-14 h-16 flex items-center justify-between gap-6">
+    <a href="#top" class="display text-2xl tracking-wide lowercase"><span class="text-rust">.</span>com</a>
+    <button id="menu-toggle" class="navlink flex items-center gap-3" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay">
+      <span>Menu</span>
+      <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true">
+        <line x1="0" y1="3" x2="22" y2="3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="0" y1="11" x2="22" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ─────────────────────────  MENU OVERLAY  ───────────────────────── -->
+<div id="menu-overlay" role="dialog" aria-modal="true" aria-label="Site navigation">
+  <button id="menu-close" class="navlink flex items-center gap-3" aria-label="Close menu">
+    <span>Close</span>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <line x1="3" y1="3" x2="17" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="17" y1="3" x2="3" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="menu-list">
+    <ul>
+      <li><a href="#about"      class="menu-item display-tight"><span class="num">01</span><span class="label">About</span></a></li>
+      <li><a href="#highlights" class="menu-item display-tight"><span class="num">02</span><span class="label">Work</span></a></li>
+      <li><a href="#editorial"  class="menu-item display-tight"><span class="num">03</span><span class="label">Editorial</span></a></li>
+      <li><a href="#brands"     class="menu-item display-tight"><span class="num">04</span><span class="label">Brands</span></a></li>
+      <li><a href="#portraits"  class="menu-item display-tight"><span class="num">05</span><span class="label">Portraits</span></a></li>
+      <li><a href="#lifestyle"  class="menu-item display-tight"><span class="num">06</span><span class="label">Lifestyle</span></a></li>
+      <li><a href="#wedding"    class="menu-item display-tight"><span class="num">07</span><span class="label">Wedding</span></a></li>
+      <li><a href="#video"      class="menu-item display-tight"><span class="num">08</span><span class="label">Video</span></a></li>
+      <li><a href="#contact"    class="menu-item display-tight"><span class="num">09</span><span class="label">Contact</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<a id="top"></a>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ═════════════════════════  COVER, COM  ═════════════════════════ -->
+<section class="page cover-pad">
+  <div class="page-inner">
+
+    <div class="flex items-center gap-5 mb-6 fade-up fade-up-1 justify-center lg:justify-start">
+      <p class="eyebrow-rust">Portfolio · Photography &amp; Videography</p>
+    </div>
+
+    <!-- big COM + matted portrait -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end mb-6 sm:mb-8">
+      <div class="lg:col-span-7 flex items-end gap-4 sm:gap-6 justify-center lg:justify-start">
+        <h1 class="display display-tight text-[160px] sm:text-[280px] lg:text-[380px] xl:text-[440px] flex-shrink com-reveal" aria-label="COM">
+          <span>C</span><span>O</span><span>M</span>
+        </h1>
+        <div class="hidden md:block flex-shrink-0 mb-6 lg:mb-12 fade-up" style="animation-delay: 1.25s;">
+          <p class="vert display text-2xl lg:text-3xl text-cream/90">Milwaukee · Self-taught</p>
+        </div>
+      </div>
+
+      <!-- matted portrait (no tilt) -->
+      <div class="lg:col-span-5 flex justify-center lg:justify-end curtain-reveal">
+        <div class="matted w-full max-w-[480px]">
+          <div class="img-frame aspect-[4/5]">
+            <img src="Assests/web/com-blue.jpg" decoding="async" fetchpriority="high" alt="Com, studio portrait, blue backdrop" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- rust hairline + tagline beneath COM -->
+    <div class="flex items-center gap-5 sm:gap-7 mb-12 sm:mb-14 max-w-[820px] mx-auto lg:mx-0 justify-center lg:justify-start">
+      <div class="rule-rust flex-1 line-draw hidden sm:block"></div>
+      <p class="eyebrow whitespace-nowrap fade-up" style="animation-delay: 1.4s;">Concept · Capture · Delivery</p>
+    </div>
+
+    <!-- horizontal hero header + auto-scrolling marquee, framed like a filmstrip -->
+    <div class="mt-24 sm:mt-36 lg:mt-48 fade-up fade-up-5">
+      <div class="flex items-center gap-5 mb-5 sm:mb-6">
+        <p class="eyebrow whitespace-nowrap">Recent Frames</p>
+        <div class="rule-rust flex-1"></div>
+        <p class="eyebrow text-cream/40 whitespace-nowrap hidden sm:block">Click to enlarge · Drag to slide</p>
+      </div>
+      <div class="rule"></div>
+    <div id="hero-scroller" class="hero-scroll-mask relative w-full overflow-hidden py-8 sm:py-10">
+      <div class="hero-scroll-track flex gap-5 sm:gap-6 w-max">
+        <!-- set A -->
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/8-5-24 Film-146.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/000017510036.JPEG" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <!-- set B (duplicate for seamless loop) -->
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/8-5-24 Film-146.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/000017510036.JPEG" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></div>
+        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></div>
+      </div>
+    </div>
+      <div class="rule"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  ABOUT  ═════════════════════════ -->
+<section id="about" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">01</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+      <div class="lg:col-span-4">
+        <div class="matted w-full max-w-[420px] mx-auto lg:mx-0 fade-on-view">
+          <div class="img-frame aspect-[3/4]">
+            <img src="Assests/web/about me.jpg" alt="Com, self-portrait with camera" />
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[112px] lg:text-[160px]">About</h2>
+
+        <div class="rule-rust my-6 sm:my-8 max-w-[620px]"></div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+          <div>
+            <p class="label-rust mb-2">Based in</p>
+            <p class="text-sm">Milwaukee, WI · USA</p>
+          </div>
+          <div>
+            <p class="label-rust mb-2">Experience</p>
+            <p class="text-sm">Working since 2019</p>
+          </div>
+          <div>
+            <p class="label-rust mb-2">Specialization</p>
+            <p class="text-sm">Editorial · Portrait · Lifestyle · Wedding · Video</p>
+          </div>
+        </div>
+
+        <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-2xl">
+          I'm Com, a self-taught photographer and videographer based in Milwaukee. I make pictures and films for brands and people I believe in: campaigns, editorial, lookbooks, lifestyle, and weddings.
+        </p>
+        <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-2xl mt-5">
+          I helped scale Unfinished Legacy from a Milwaukee idea into a global clothing brand, and helped grow its flagship store in the Third Ward into a fixture of the city. I've worked with the Brewers, the Bucks, the Milwaukee Art Museum, and lensed a campaign for a candidate running for governor.
+        </p>
+        <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-2xl mt-5">
+          I've spent years studying what builds brands and testing what I learn against real work, which means I show up with more than a camera. I understand the market, the audience, and how supply and demand actually move a brand forward.
+        </p>
+        <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-2xl mt-5">
+          I work end to end: concept, capture, delivery. The work ships polished, on brand, and on time. If it's worth shooting, I want to see it.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  HIGHLIGHTS  ═════════════════════════ -->
+<section id="highlights" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">02</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-5 mobile-center">
+        <h2 class="display text-[64px] sm:text-[112px] lg:text-[140px] fade-on-view">
+          Selected<br/>Work
+        </h2>
+        <p class="text-[15px] text-cream/70 mt-6 max-w-md leading-[1.75] fade-on-view">
+          Five categories. Pick one.
+        </p>
+      </div>
+
+      <div class="lg:col-span-7 grid grid-cols-2 gap-4 sm:gap-5 fade-on-view">
+        <a href="#editorial" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Editorial</span><span class="dash">/</span><span class="label-rust">01</span></div>
+          <div class="img-frame"><img src="Assests/web/car shoot-02.jpg" alt="Editorial" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#portraits" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Portraits</span><span class="dash">/</span><span class="label-rust">02</span></div>
+          <div class="img-frame"><img src="Assests/web/sam 11-8-24-13.jpg" alt="Portraits" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#lifestyle" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Lifestyle</span><span class="dash">/</span><span class="label-rust">03</span></div>
+          <div class="img-frame"><img src="Assests/web/M1-2.jpg" alt="Lifestyle" style="object-position: center top;" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#wedding" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Wedding</span><span class="dash">/</span><span class="label-rust">04</span></div>
+          <div class="img-frame"><img src="Assests/web/hunterswedding-34.jpg" alt="Wedding" style="object-position: center 30%;" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#video" class="cat-tile cat-tile-wide col-span-2">
+          <div class="cat-head"><span class="label-rust">Video</span><span class="dash">/</span><span class="label-rust">05</span></div>
+          <div class="img-frame"><img src="Assests/web/posters/Leons 4k.MP4.png" alt="Video" loading="lazy" decoding="async" /></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  EDITORIAL  ═════════════════════════ -->
+<section id="editorial" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">03</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Editorial</h2>
+      </div>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
+          Brand campaigns and editorial for the people building things in Milwaukee and beyond. Editorial is more than the product, it's how the brand looks, feels, and lives in the world.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Brand Credits</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Unfinished Legacy &nbsp; · &nbsp; Milwaukee Brewers &nbsp; · &nbsp; Milwaukee Bucks &nbsp; · &nbsp; Milwaukee Art Museum &nbsp; · &nbsp; Campaign for Governor
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-02.jpg" alt="Car shoot, UL" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/02-06-25 Film-07.jpg" alt="Window Light" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/1-17-23-50.jpg" alt="UL, van in snow" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/7-20-24 flagship red tee-74.jpg" alt="Flagship red tee" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/02-06-25 Film-28.jpg" alt="Studio Light" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/000017510036.JPEG" alt="UL, BMW" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-28-24 Film-01.jpg" alt="UL editorial, pair" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/8-5-24 Film-146.jpg" alt="On the dock" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/13.jpg" alt="UL, group, night" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/000010440005.jpg" alt="Twilight, UL" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/joy racer hoodies. 0.JPG" alt="Joy Racer hoodies" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-33.jpg" alt="Chi Lookbook 33" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-37.jpg" alt="Chi Lookbook 37" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-18.jpg" alt="Chi Lookbook 18" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-08.jpg" alt="Car shoot, close" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-12.jpg" alt="Car shoot, couple" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/12-11-24 Aaron-9.jpg" alt="Aaron, Milwaukee shop" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/5-14-24 film-14.jpg" alt="UL film" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/7-2-24 film-19.jpg" alt="UL film 19" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/22.JPG" alt="UL, Legacy tee in the field" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/2.jpg" alt="UL, dock, three tees" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/5-14-24 film-24.jpg" alt="UL film, no. 24" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/12-19-23 film-02.jpg" alt="UL film, winter" loading="lazy" decoding="async"/></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  BRAND STRATEGY  ═════════════════════════ -->
+<section id="brands" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">04</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-16 sm:mb-20 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Brand<br/>Strategy<br/>&amp; Curation</h2>
+      </div>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-xl mt-2">
+          Other than shooting, I help brands look like themselves online. Feed direction, campaign rollouts, curation, social strategy. The two pages below are my longest case study, a Milwaukee idea I helped grow into a global clothing brand.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Roles</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Brand Strategist &nbsp;·&nbsp; Curation &nbsp;·&nbsp; Photography &nbsp;·&nbsp; Creative Direction
+        </p>
+      </div>
+    </div>
+
+    <!-- Two account stat-cards, side by side on desktop -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20">
+
+      <!-- @unfinishedlegacy -->
+      <div class="fade-on-view mobile-center">
+        <a href="https://www.instagram.com/unfinishedlegacy/" target="_blank" rel="noopener" class="flex items-center gap-4 group mb-8">
+          <span class="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #C75A4A 0%, #8B3A2E 100%); box-shadow: 0 18px 40px -18px rgba(199,90,74,.6);">
+            <span class="display text-cream text-xl sm:text-2xl tracking-tight">UL</span>
+          </span>
+          <span class="block">
+            <span class="block display text-2xl sm:text-3xl group-hover:text-rust transition-colors">@unfinishedlegacy</span>
+            <span class="block text-[13px] text-cream/60 mt-1">Streetwear from Milwaukee, worldwide</span>
+          </span>
+        </a>
+
+        <div class="mb-8">
+          <p class="display display-tight text-[96px] sm:text-[140px] lg:text-[160px] leading-[0.85]">171K</p>
+          <div class="flex items-center gap-4 mt-5">
+            <p class="eyebrow-rust">Followers</p>
+            <div class="rule-rust flex-1"></div>
+          </div>
+        </div>
+
+        <p class="text-[15px] leading-[1.85] text-cream/85 max-w-md mb-8">
+          The main brand voice. Campaigns, lookbooks, and the world the brand lives in.
+        </p>
+
+        <a href="https://www.instagram.com/unfinishedlegacy/" target="_blank" rel="noopener" class="inline-flex items-center gap-3 group">
+          <span class="ulink text-[11px] tracking-[0.22em] uppercase font-medium text-cream group-hover:text-rust transition-colors leading-none">View on Instagram</span>
+          <span class="text-cream group-hover:text-rust transition-colors leading-none" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <!-- @unfinishedlegacy_flagship -->
+      <div class="fade-on-view mobile-center">
+        <a href="https://www.instagram.com/unfinishedlegacy_flagship/" target="_blank" rel="noopener" class="flex items-center gap-4 group mb-8">
+          <span class="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #2B2A26 0%, #0E0E0E 100%); border: 1px solid rgba(199,90,74,.55); box-shadow: 0 18px 40px -18px rgba(0,0,0,.7);">
+            <span class="display text-cream text-xl sm:text-2xl tracking-tight">F</span>
+          </span>
+          <span class="block">
+            <span class="block display text-2xl sm:text-3xl group-hover:text-rust transition-colors">@unfinishedlegacy_flagship</span>
+            <span class="block text-[13px] text-cream/60 mt-1">UL Flagship, Milwaukee Third Ward</span>
+          </span>
+        </a>
+
+        <div class="mb-8">
+          <p class="display display-tight text-[96px] sm:text-[140px] lg:text-[160px] leading-[0.85]">22.2K</p>
+          <div class="flex items-center gap-4 mt-5">
+            <p class="eyebrow-rust">Followers</p>
+            <div class="rule-rust flex-1"></div>
+          </div>
+        </div>
+
+        <p class="text-[15px] leading-[1.85] text-cream/85 max-w-md mb-8">
+          The storefront feed. Drops, community, and what's on the walls this week.
+        </p>
+
+        <a href="https://www.instagram.com/unfinishedlegacy_flagship/" target="_blank" rel="noopener" class="inline-flex items-center gap-3 group">
+          <span class="ulink text-[11px] tracking-[0.22em] uppercase font-medium text-cream group-hover:text-rust transition-colors leading-none">View on Instagram</span>
+          <span class="text-cream group-hover:text-rust transition-colors leading-none" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═════════════════════════  PORTRAITS  ═════════════════════════ -->
+<section id="portraits" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">05</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Portraits</h2>
+      </div>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
+          Whether it's a 35mm film roll on a Saturday afternoon or a controlled studio session, my goal is the same: make the person feel seen, then make a picture they're proud of.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Approach</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Editorial &nbsp;·&nbsp; Studio &nbsp;·&nbsp; 35mm Film &nbsp;·&nbsp; Private commissions
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam 11-8-24-13.jpg" alt="Sam, in the leaves" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/3-8-25 sam bday-9.jpg" alt="Sam, birthday studio" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/izzy -4.jpg" alt="Izzy" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/kats-9.JPG" alt="Kat" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/ike NFL.jpg" alt="Ike, NFL" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/09-19-25 film gia-5.JPG" alt="Gia, No. 5" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/kash9.jpg" alt="Kash" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/All Goods MKE-24.JPG" alt="All Goods MKE" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam b day film-33.jpg" alt="Sam, birthday film" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/09-19-25 film gia-9.JPG" alt="Gia, No. 9" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/kash-7.jpg" alt="Kash at work" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/gia-37.JPG" alt="Gia, fall" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/gia-45-2.JPG" alt="Gia, daylight" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/14.JPG" alt="Portrait" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/p4.jpg" alt="Portrait, teal print dress, sleeve tattoo" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/p6.jpg" alt="Portrait, white skull tee, dreads, studio" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/p5.jpg" alt="Portrait, black tee, blue flame pants, studio" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/p1.jpg" alt="Portrait, red mesh Unfinished Legacy jersey" loading="lazy" decoding="async"/></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  LIFESTYLE  ═════════════════════════ -->
+<section id="lifestyle" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">06</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Lifestyle</h2>
+      </div>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
+          Quiet rooms, late-night drives, a dog in the dandelions, a friend across the table. Lifestyle is the in-between, the world a brand or person actually lives in.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Range</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Documentary &nbsp;·&nbsp; Editorial &nbsp;·&nbsp; Brand &nbsp;·&nbsp; Personal
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/4-20-24-29.jpg" alt="Warm interior" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/M1-2.jpg" alt="Silhouette, Chicago" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/4.jpg" alt="Skater" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/5.jpg" alt="Vintage Buick" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/6.jpg" alt="Lamp & chairs, warm interior" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/mya dog-15.jpg" alt="Mya" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/24 (1).jpg" alt="Lifestyle" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/gia-42.JPG" alt="Gia, fade" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/1.JPG" alt="Lifestyle" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/jess-37.jpg" alt="Jess, evening" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/details-1.jpg" alt="Details" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/12-19-23 film-05.jpg" alt="Film, winter" loading="lazy" decoding="async"/></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  WEDDING  ═════════════════════════ -->
+<section id="wedding" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">07</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Wedding</h2>
+      </div>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
+          The quiet between vows. The arm pulling closer. A walk through the garden when no one's watching. Weddings get the same patient eye as everything else, let me document the day the way you'll want to remember it.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Booking</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Travel welcome &nbsp;·&nbsp; Private commissions
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/p3.jpg" alt="Wedding, groomsmen group, Tuscan balcony" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/34.jpg" alt="Spanns, kiss on the stairs, veil" style="object-position: center 30%;" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-29.jpg" alt="Spanns, balcony kiss, Tuscan hills" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-47.jpg" alt="Spanns, bouquet & veil, courtyard" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-2.jpg" alt="Spanns, ring on invitation, Italy" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-49.jpg" alt="Spanns, kiss by the pool, Italy" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-30.jpg" alt="Spanns, reception menu" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-31.jpg" alt="Spanns, reception table, candles" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-34.jpg" alt="Hunter's wedding" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam%2011-8-24-26.jpg" alt="Sam, couple" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-36.jpg" alt="Spanns, cake cutting" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam%2011-8-24-41.jpg" alt="Sam, landscape" loading="lazy" decoding="async"/></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  VIDEO  ═════════════════════════ -->
+<section id="video" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">08</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-12 sm:mb-16 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Video</h2>
+      </div>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
+          Brand spots, campaign cuts, documentary, lifestyle. Click any tile to play.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Format</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Landscape &nbsp;·&nbsp; Vertical &nbsp;·&nbsp; 4K &nbsp;·&nbsp; Reels
+        </p>
+      </div>
+    </div>
+
+    <!-- ───── MOST RECENT ───── -->
+    <div class="mb-16 sm:mb-20">
+      <div class="flex items-center gap-5 mb-6">
+        <p class="label-rust whitespace-nowrap">Most Recent</p>
+        <div class="rule-rust flex-1"></div>
+      </div>
+
+      <figure class="video-tile max-w-[1200px] mx-auto fade-on-view">
+        <video class="block w-full h-auto bg-ink" preload="metadata" controls playsinline>
+          <source src="Assests/Blue Hour Coffee.MP4" type="video/mp4" />
+        </video>
+        <figcaption class="pt-4 flex items-baseline justify-between gap-4">
+          <p class="display text-2xl">Blue Hour Coffee</p>
+          <p class="label-rust">New</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- ───── LANDSCAPE GROUP (4:3 + 16:9) ───── -->
+    <div class="mb-16 sm:mb-20">
+      <p class="label-rust mb-6">Landscape · Brand &amp; Documentary</p>
+
+      <!-- Leon's HERO 4:3 -->
+      <figure class="video-tile mb-6 lg:mb-8 max-w-[1200px] mx-auto fade-on-view">
+        <div class="img-frame aspect-[4/3]">
+          <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/Leons 4k.MP4.png">
+            <source src="Assests/Leons 4k.MP4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="pt-4 flex items-baseline justify-between gap-4">
+          <p class="display text-2xl">Leon's</p>
+          <p class="label-rust">Brand · 4K</p>
+        </figcaption>
+      </figure>
+
+      <!-- 3-col 4:3 row -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 lg:mb-8">
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[4/3]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/Squire 1.mp4.png">
+              <source src="Assests/Squire 1.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-3">
+            <p class="display text-lg">Squire</p>
+            <p class="label-rust">Brand</p>
+          </figcaption>
+        </figure>
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[4/3]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/Screen Print Saturday November 2.mp4.png">
+              <source src="Assests/Screen Print Saturday November 2.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-3">
+            <p class="display text-lg">Screen Print Saturday</p>
+            <p class="label-rust">Doc</p>
+          </figcaption>
+        </figure>
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[4/3]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/FRAN WOMANS RIGHTS.mp4.png">
+              <source src="Assests/FRAN WOMANS RIGHTS.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-3">
+            <p class="display text-lg">Fran, Women's Rights</p>
+            <p class="label-rust">Campaign</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- 16:9 strip,14-AD -->
+      <figure class="video-tile mb-6 lg:mb-8 max-w-[1200px] mx-auto fade-on-view">
+        <div class="img-frame aspect-[16/9]">
+          <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/14-AD.MP4.png">
+            <source src="Assests/14-AD.MP4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="pt-3 flex items-baseline justify-between gap-3">
+          <p class="display text-lg">14, AD</p>
+          <p class="label-rust">Spot · 16:9</p>
+        </figcaption>
+      </figure>
+
+      <!-- A Good Cup Of Coffee, previously most-recent -->
+      <figure class="video-tile max-w-[1200px] mx-auto fade-on-view">
+        <video class="block w-full h-auto bg-ink" preload="metadata" controls playsinline>
+          <source src="Assests/A Good Cup Of Coffee.MP4" type="video/mp4" />
+        </video>
+        <figcaption class="pt-3 flex items-baseline justify-between gap-3">
+          <p class="display text-lg">A Good Cup Of Coffee</p>
+          <p class="label-rust">Doc</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- ───── IG VERTICAL GROUP (9:16) ───── -->
+    <div>
+      <p class="label-rust mb-6">Vertical · Reels &amp; Portrait</p>
+
+      <!-- Row 1: 3 verticals -->
+      <div class="grid grid-cols-3 gap-4 sm:gap-6 mb-6 lg:mb-8">
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/tre Norman final.mp4.png">
+              <source src="Assests/tre Norman final.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Tre Norman</p>
+            <p class="label-rust hidden sm:block">Portrait</p>
+          </figcaption>
+        </figure>
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/11-change-artist.MP4.png">
+              <source src="Assests/11-change-artist.MP4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Change Artist</p>
+            <p class="label-rust hidden sm:block">Reel</p>
+          </figcaption>
+        </figure>
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/HONG TESTIMONIAL 2.mp4.png">
+              <source src="Assests/HONG TESTIMONIAL 2.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Hong</p>
+            <p class="label-rust hidden sm:block">Testimonial</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Row 2: single vertical centered -->
+      <div class="flex justify-center">
+        <figure class="video-tile fade-on-view w-full max-w-[360px]">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/posters/Mex.Fiesta.mp4 Final.mp4.png">
+              <source src="Assests/Mex.Fiesta.mp4 Final.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Mex Fiesta</p>
+            <p class="label-rust hidden sm:block">Brand</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  CONTACT  ═════════════════════════ -->
+<section id="contact" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">09</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+      <div class="lg:col-start-2 lg:col-span-6 fade-on-view mobile-center">
+        <h2 class="display text-[80px] sm:text-[140px] lg:text-[200px] xl:text-[240px] leading-[0.92]">Let's<br/>Talk</h2>
+
+        <div class="rule-rust my-8 max-w-[620px]"></div>
+
+        <p class="text-[15px] text-cream/75 max-w-xl leading-[1.85]">
+          Email me for a quote, project rates, or just to talk shop. I get back same week.
+        </p>
+
+        <ul class="space-y-3 text-cream mt-10">
+          <li class="flex items-baseline gap-4">
+            <span class="label-cream text-rust w-24 shrink-0">Email</span>
+            <a class="ulink text-lg sm:text-xl" href="https://mail.google.com/mail/?view=cm&fs=1&to=comeronmoussavi82@gmail.com&su=Reaching%20Out&body=Hi%2C%20I%20wanted%20to%20reach%20out.%0A%0AName%3A%0AReason%20for%20reaching%20out%3A%0ABest%20way%20to%20contact%20me%3A" target="_blank" rel="noopener">comeronmoussavi82@gmail.com</a>
+          </li>
+          <li class="flex items-baseline gap-4">
+            <span class="label-cream text-rust w-24 shrink-0">Instagram</span>
+            <a class="ulink text-lg sm:text-xl" href="https://www.instagram.com/com.ondabeat/" target="_blank" rel="noopener">@com.ondabeat</a>
+          </li>
+          <li class="flex items-baseline gap-4">
+            <span class="label-cream text-rust w-24 shrink-0">LinkedIn</span>
+            <a class="ulink text-lg sm:text-xl" href="https://www.linkedin.com/in/comeron-moussavi-077547199/" target="_blank" rel="noopener">Comeron Moussavi</a>
+          </li>
+        </ul>
+
+        <div class="flex items-center gap-5 mt-12">
+          <svg width="48" height="20" viewBox="0 0 48 20" fill="none" class="text-cream"><line x1="47" y1="10" x2="0" y2="10" stroke="currentColor" stroke-width="1.5"/><path d="M40 17l7-7-7-7" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <a id="quote-cta" href="https://mail.google.com/mail/?view=cm&fs=1&to=comeronmoussavi82@gmail.com&su=Reaching%20Out&body=Hi%2C%20I%20wanted%20to%20reach%20out.%0A%0AName%3A%0AReason%20for%20reaching%20out%3A%0ABest%20way%20to%20contact%20me%3A" target="_blank" rel="noopener" class="display text-3xl sm:text-5xl ulink">Get in Touch</a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-4 flex justify-center lg:justify-end fade-on-view">
+        <div class="matted w-full max-w-[380px]">
+          <div class="img-frame aspect-[4/5]">
+            <img src="Assests/web/p2.jpg" alt="Com, self-portrait with camera" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────  FOOTER  ───────────────────────── -->
+<footer class="border-t border-cream/10">
+  <div class="px-6 sm:px-10 lg:px-14 py-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex items-center gap-3 leading-none">
+      <span class="display text-xl lowercase">.com</span>
+      <span class="eyebrow">Photographer &amp; Videographer · Milwaukee</span>
+    </div>
+    <div class="text-xs text-mute">© <span id="yr"></span> Com. All images by Com.</div>
+  </div>
+</footer>
+
+<script>
+  // Force scroll to top on every page load (refresh, navigation, etc.)
+  window.scrollTo(0, 0);
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.fade-on-view').forEach(el => fadeObserver.observe(el));
+
+  // ── Hero scroller: auto-scroll with hover-pause, native scroll, click-drag ──
+  (function(){
+    const scroller = document.getElementById('hero-scroller');
+    if (!scroller) return;
+    const track = scroller.querySelector('.hero-scroll-track');
+    if (!track) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const speed = 1.6; // px per frame (~96 px/sec at 60fps)
+    let isHovering = false;
+    let isDragging = false;
+    let dragMoved = false;
+    let dragStartX = 0;
+    let dragStartScroll = 0;
+
+    function trackHalf() { return track.scrollWidth / 2 || 1; }
+
+    function tick() {
+      // Don't compete with the page's smooth-scroll animation for frame budget
+      const pageScrolling = document.body.classList.contains('is-scrolling');
+      if (!reduced && !isHovering && !isDragging && !pageScrolling) {
+        scroller.scrollLeft += speed;
+      }
+      // seamless loop using set A / set B duplication
+      const half = trackHalf();
+      if (scroller.scrollLeft >= half) scroller.scrollLeft -= half;
+      else if (scroller.scrollLeft < 0) scroller.scrollLeft += half;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Hover pause (desktop), pointer off the section resumes auto-slide
+    scroller.addEventListener('mouseenter', () => { isHovering = true; });
+    scroller.addEventListener('mouseleave', () => { isHovering = false; isDragging = false; scroller.classList.remove('is-dragging'); });
+
+    // Touch pause (mobile) — touching the marquee pauses, lift-off resumes after a beat
+    let touchHoldTimer = null;
+    scroller.addEventListener('touchstart', () => {
+      isHovering = true;
+      clearTimeout(touchHoldTimer);
+    }, { passive: true });
+    const releaseTouch = () => {
+      clearTimeout(touchHoldTimer);
+      touchHoldTimer = setTimeout(() => { isHovering = false; }, 3500);
+    };
+    scroller.addEventListener('touchend', releaseTouch, { passive: true });
+    scroller.addEventListener('touchcancel', releaseTouch, { passive: true });
+
+    // Click-drag to slide — MOUSE ONLY (touch is handled by native horizontal scroll)
+    scroller.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      isDragging = true;
+      dragMoved = false;
+      dragStartX = e.pageX;
+      dragStartScroll = scroller.scrollLeft;
+    });
+    scroller.addEventListener('pointermove', (e) => {
+      if (!isDragging || e.pointerType !== 'mouse') return;
+      const dx = e.pageX - dragStartX;
+      if (Math.abs(dx) > 5) {
+        if (!dragMoved) { dragMoved = true; scroller.classList.add('is-dragging'); }
+        e.preventDefault();
+        scroller.scrollLeft = dragStartScroll - dx;
+      }
+    });
+    window.addEventListener('pointerup', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      if (isDragging) {
+        isDragging = false;
+        scroller.classList.remove('is-dragging');
+      }
+    });
+    // If a real mouse drag occurred, suppress the trailing click so lightbox doesn't open.
+    // Touch taps never set dragMoved, so taps always reach the lightbox handler.
+    scroller.addEventListener('click', (e) => {
+      if (dragMoved) { e.stopPropagation(); e.preventDefault(); dragMoved = false; }
+    }, true);
+  })();
+
+  // ── "View More" buttons for trimmed galleries ──
+  (function(){
+    document.querySelectorAll('[data-trim]').forEach(grid => {
+      const trim = parseInt(grid.dataset.trim, 10);
+      const items = grid.querySelectorAll(':scope > .img-frame');
+      if (!isFinite(trim) || items.length <= trim) return;
+      grid.classList.add('gallery-trim');
+      const wrap = document.createElement('div');
+      wrap.className = 'view-more-wrap';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'view-more-btn';
+      btn.innerHTML = 'View All <span class="count">' + items.length + '</span>';
+      wrap.appendChild(btn);
+      grid.parentNode.insertBefore(wrap, grid.nextSibling);
+      btn.addEventListener('click', () => {
+        grid.classList.add('is-expanded');
+        wrap.style.display = 'none';
+      });
+    });
+  })();
+
+  // ── Smooth scroll: fast, easeOutQuart, distance-aware duration ──
+  function smoothScrollTo(targetY, duration) {
+    const html = document.documentElement;
+    const prevBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto'; // override CSS smooth so our rAF loop runs cleanly
+    const startY = window.pageYOffset;
+    const distance = targetY - startY;
+    if (Math.abs(distance) < 2) { html.style.scrollBehavior = prevBehavior; return; }
+    // 350ms minimum, +0.15ms per px of distance, capped at 700ms — short scrolls snap, long scrolls glide
+    const dur = duration || Math.min(700, 350 + Math.abs(distance) * 0.15);
+    const startTime = performance.now();
+    document.body.classList.add('is-scrolling'); // kills fade-on-view paint pressure
+    function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+    function step(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / dur, 1);
+      window.scrollTo(0, startY + distance * easeOutQuart(t));
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        html.style.scrollBehavior = prevBehavior;
+        // Slight delay so any in-view IntersectionObserver fires settle before re-enabling transitions
+        setTimeout(() => document.body.classList.remove('is-scrolling'), 80);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ── Preload all gallery images after first paint so navigation never waits on the network ──
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('img[loading="lazy" decoding="async"]').forEach(img => {
+        if (img.src) { const p = new Image(); p.src = img.src; }
+      });
+    }, 600); // wait until critical resources have settled
+  });
+
+  // ── Fullscreen menu overlay ──
+  (function(){
+    const toggle  = document.getElementById('menu-toggle');
+    const overlay = document.getElementById('menu-overlay');
+    const closeBtn = document.getElementById('menu-close');
+    if (!toggle || !overlay || !closeBtn) return;
+
+    function openMenu() {
+      overlay.classList.add('is-open');
+      document.body.classList.add('menu-open');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+      overlay.classList.remove('is-open');
+      document.body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeMenu(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeMenu();
+    });
+    overlay.querySelectorAll('a.menu-item').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        const target = href === '#top' ? null : document.querySelector(href);
+        // 72px clears the 64px fixed nav with a touch of breathing room (matches section scroll-margin)
+        const targetY = target ? (target.getBoundingClientRect().top + window.pageYOffset - 72) : 0;
+        closeMenu();
+        // Eagerly fetch the destination's images so they're ready before scroll completes
+        if (target) {
+          target.querySelectorAll('img').forEach(img => {
+            if (img.src) { const p = new Image(); p.src = img.src; }
+          });
+        }
+        // Scroll on the next frame so the close fade can begin in parallel
+        requestAnimationFrame(() => smoothScrollTo(targetY));
+      });
+    });
+  })();
+
+  // ── "Email for a Quote": try opening email client AND always copy email to clipboard ──
+  (function(){
+    const cta = document.getElementById('quote-cta');
+    const toast = document.getElementById('toast');
+    if (!cta || !toast) return;
+    const EMAIL = 'comeronmoussavi82@gmail.com';
+    let toastTimer = null;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2400);
+    }
+    cta.addEventListener('click', async (e) => {
+      // Let the mailto navigate (browser will open email app if available)
+      // Also copy the address to clipboard as a safety net so the user always gets it
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(EMAIL);
+          showToast('Email copied · ' + EMAIL);
+        } else {
+          // Fallback for older browsers
+          const ta = document.createElement('textarea');
+          ta.value = EMAIL;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); showToast('Email copied · ' + EMAIL); } catch (_) {}
+          document.body.removeChild(ta);
+        }
+      } catch (_) { /* clipboard denied — mailto still fires */ }
+    });
+  })();
+
+  // ── Contact form: build a mailto: with the inquiry pre-filled ──
+  (function(){
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    const status = document.getElementById('cf-status');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const service = form.querySelector('#cf-service').value.trim();
+      const name    = form.querySelector('#cf-name').value.trim();
+      const email   = form.querySelector('#cf-email').value.trim();
+      const message = form.querySelector('#cf-message').value.trim();
+
+      if (!service || !name || !email || !message) {
+        status.textContent = 'Please fill in every field before sending.';
+        status.classList.remove('hidden');
+        return;
+      }
+
+      const subject = encodeURIComponent('Inquiry: ' + service);
+      const body = encodeURIComponent(
+        'Project: ' + service + '\n' +
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n\n' +
+        message + '\n'
+      );
+
+      status.textContent = 'Opening your email client. If nothing happens, copy comeronmoussavi82@gmail.com and send manually.';
+      status.classList.remove('hidden');
+      window.location.href = 'mailto:comeronmoussavi82@gmail.com?subject=' + subject + '&body=' + body;
+    });
+  })();
+
+  // ── Lightbox: click any gallery image to enlarge, arrow nav, ESC to close ──
+  (function(){
+    const sections = ['#editorial', '#portraits', '#lifestyle', '#wedding'];
+
+    const overlay = document.createElement('div');
+    overlay.id = 'lightbox';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Image viewer');
+    overlay.className = 'fixed inset-0 z-[100] flex items-center justify-center px-4';
+    overlay.innerHTML = `
+      <button id="lb-close" type="button" aria-label="Close" class="absolute top-5 right-5 sm:top-7 sm:right-7 w-11 h-11 rounded-full flex items-center justify-center text-cream/85">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button id="lb-prev" type="button" aria-label="Previous image" class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-cream/85">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button id="lb-next" type="button" aria-label="Next image" class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-cream/85">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <figure class="max-w-[94vw] flex flex-col items-center justify-center gap-4">
+        <div class="lb-stage">
+          <img id="lb-img-a" alt="" />
+          <img id="lb-img-b" alt="" />
+        </div>
+        <figcaption class="flex flex-col items-center justify-center text-cream/70">
+          <span id="lb-counter" class="text-[11px] tracking-[0.22em] uppercase px-3 py-1 rounded-full text-cream/80"></span>
+          <span class="swipe-hint" aria-hidden="true">Swipe to browse</span>
+        </figcaption>
+      </figure>
+    `;
+    document.body.appendChild(overlay);
+
+    const imgA = overlay.querySelector('#lb-img-a');
+    const imgB = overlay.querySelector('#lb-img-b');
+    const countEl = overlay.querySelector('#lb-counter');
+    let group = [], idx = 0, closing = false, active = imgA, token = 0;
+
+    function render(i) {
+      if (!group.length) return;
+      idx = (i + group.length) % group.length;
+      const target = group[idx];
+      const next = active === imgA ? imgB : imgA;
+      // Reset any leftover transform/transition on the slot we're about to reuse
+      next.style.transform = '';
+      next.style.transition = '';
+      const myToken = ++token;
+      countEl.textContent = (idx + 1) + ' / ' + group.length;
+      const swap = () => {
+        if (myToken !== token) return; // a newer render superseded us
+        next.classList.add('is-active');
+        active.classList.remove('is-active');
+        active = next;
+      };
+      next.onload = swap;
+      next.onerror = swap;
+      next.src = target.src;
+      next.alt = target.alt || '';
+    }
+
+    let closeTimer = null;
+    let savedScrollY = 0;
+
+    function open(triggerImg, theGroup) {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      closing = false;
+
+      group = theGroup;
+      const start = group.indexOf(triggerImg);
+      const safeStart = start >= 0 ? start : 0;
+      const target = group[safeStart];
+      if (!target) return;
+
+      idx = safeStart;
+      countEl.textContent = (idx + 1) + ' / ' + group.length;
+
+      // Reset only stale state (transforms, is-dragging) — KEEP src and is-active so the
+      // previously-shown image remains in its slot for a clean crossfade into the new image
+      imgA.removeAttribute('style');
+      imgB.removeAttribute('style');
+      imgA.classList.remove('is-dragging');
+      imgB.classList.remove('is-dragging');
+
+      // iOS-safe scroll lock: save scroll position, fix body in place
+      savedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.top = '-' + savedScrollY + 'px';
+      document.body.classList.add('lb-open');
+      overlay.classList.add('is-open');
+
+      const hasPrevious = imgA.classList.contains('is-active') || imgB.classList.contains('is-active');
+      if (hasPrevious) {
+        // Use render() to crossfade — old image stays visible while new loads on the inactive slot
+        render(safeStart);
+      } else {
+        // First open ever — direct set imgA
+        imgA.src = target.src;
+        imgA.alt = target.alt || '';
+        imgA.classList.add('is-active');
+        active = imgA;
+      }
+
+      // Background-preload all so prev/next is instant
+      group.forEach(g => { if (g && g.src) { const p = new Image(); p.src = g.src; } });
+    }
+
+    function close() {
+      if (closing) return;
+      closing = true;
+      overlay.classList.remove('is-open');
+      document.body.classList.remove('lb-open');
+      // Restore the scroll position the page was at when the lightbox opened
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollY);
+      closeTimer = setTimeout(() => {
+        // KEEP src and is-active alive — they're the source for the next open's crossfade.
+        imgA.removeAttribute('style');
+        imgB.removeAttribute('style');
+        closing = false;
+        closeTimer = null;
+      }, 380);
+    }
+
+    // Section galleries
+    sections.forEach(sel => {
+      const sectionGroup = Array.from(document.querySelectorAll(sel + ' a.img-frame img'));
+      document.querySelectorAll(sel + ' a.img-frame').forEach(a => {
+        a.classList.add('cursor-zoom-in');
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const img = a.querySelector('img');
+          if (img) open(img, sectionGroup);
+        });
+      });
+    });
+
+    // Hero scroller, dedupe set A / set B (set B is aria-hidden)
+    const heroUnique = Array.from(document.querySelectorAll('#hero-scroller .hero-tile:not([aria-hidden="true"]) img'));
+    document.querySelectorAll('#hero-scroller .hero-tile').forEach(tile => {
+      tile.classList.add('cursor-zoom-in');
+      tile.addEventListener('click', () => {
+        const img = tile.querySelector('img');
+        if (!img) return;
+        const matched = heroUnique.find(u => u.src === img.src) || heroUnique[0];
+        open(matched, heroUnique);
+      });
+    });
+
+    overlay.querySelector('#lb-close').addEventListener('click', close);
+    overlay.querySelector('#lb-prev').addEventListener('click', () => render(idx - 1));
+    overlay.querySelector('#lb-next').addEventListener('click', () => render(idx + 1));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') render(idx - 1);
+      else if (e.key === 'ArrowRight') render(idx + 1);
+    });
+
+    // Swipe left/right on mobile to navigate — pure gesture detection, NO transforms touched on the image.
+    // (The previous live-drag preview was leaking transform state, knocking images off-center on subsequent opens.)
+    let swipeStartX = 0, swipeStartY = 0, swipeActive = false;
+    overlay.addEventListener('touchstart', (e) => {
+      if (!overlay.classList.contains('is-open')) return;
+      if (e.target.closest('#lb-close, #lb-prev, #lb-next')) {
+        swipeActive = false;
+        return;
+      }
+      const t = e.changedTouches[0];
+      swipeStartX = t.screenX;
+      swipeStartY = t.screenY;
+      swipeActive = true;
+    }, { passive: true });
+    overlay.addEventListener('touchend', (e) => {
+      if (!swipeActive) return;
+      swipeActive = false;
+      const t = e.changedTouches[0];
+      const dx = t.screenX - swipeStartX;
+      const dy = t.screenY - swipeStartY;
+      // Real horizontal swipe: >50px and dominantly horizontal
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        if (dx > 0) render(idx - 1); // swipe right → previous
+        else        render(idx + 1); // swipe left  → next
+      }
+    }, { passive: true });
+    overlay.addEventListener('touchcancel', () => { swipeActive = false; }, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

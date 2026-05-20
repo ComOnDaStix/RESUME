@@ -1,0 +1,27 @@
+# Original full-resolution images (use Assests/web/ optimized versions)
+Assests/*.jpg
+Assests/*.JPG
+Assests/*.jpeg
+Assests/*.JPEG
+Assests/*.png
+Assests/*.PNG
+
+# Original videos (too large for GitHub — host on Vimeo/YouTube and embed)
+Assests/*.mp4
+Assests/*.MP4
+Assests/*.mov
+Assests/*.MOV
+Assests/*.webm
+
+# Duplicate poster folder (use Assests/web/posters instead)
+Assests/posters/
+
+# macOS / editor cruft
+.DS_Store
+**/.DS_Store
+*.log
+node_modules/
+
+# Backup files
+index.html.backup
+*.bak
