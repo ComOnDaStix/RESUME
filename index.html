@@ -324,8 +324,12 @@
     -webkit-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
-    pointer-events: auto;
   }
+  /* Only capture clicks while the lightbox is open. A closed overlay is pointer-events:none,
+     but an explicit pointer-events:auto on the img would override that and leave an invisible
+     (opacity:0) image eating clicks across the page. Scope it to .is-open so it can't leak. */
+  #lightbox.is-open .lb-stage > img { pointer-events: auto; }
+  #lightbox:not(.is-open) .lb-stage > img { pointer-events: none; }
   #lightbox .lb-stage > img.is-active { opacity: 1; }
   #lightbox .lb-stage > img.is-dragging { transition: none; }
   #lightbox button {

@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/com/photogrophy/Assests/com-og-image.png)",
+      "Bash(git commit -m ' *)",
+      "Bash(curl -sI https://comdotcom.net/Assests/web/com-og-image.png)",
+      "Bash(curl -s https://comdotcom.net/)",
+      "Bash(ffprobe -v error -show_entries stream=width,height,r_frame_rate,bit_rate,codec_name -of default=noprint_wrappers=1 \"/Users/com/photogrophy/Assests/web/videos/Leons 4k.mp4\")",
+      "Bash(ffprobe -v error -show_entries stream=width,height,r_frame_rate,bit_rate,codec_name -of default=noprint_wrappers=1 \"/Users/com/photogrophy/Assests/Leons 4k.MP4\")",
+      "Bash(brew list *)",
+      "Bash(mdfind -name ffmpeg)",
+      "Bash(brew --version)",
+      "Bash(mdfind -name \"ffmpeg\")",
+      "Read(//Applications/**)",
+      "Bash(curl -L -o ffmpeg.zip https://evermeet.cx/ffmpeg/getrelease/zip)",
+      "Bash(unzip -o ffmpeg.zip)",
+      "Bash(mv ffmpeg *)",
+      "Bash(chmod +x ~/bin/ffmpeg)",
+      "Bash(~/bin/ffmpeg -version)",
+      "Bash(chmod +x /Users/com/photogrophy/reencode_videos.sh)",
+      "Bash(/Users/com/photogrophy/reencode_videos.sh)",
+      "Bash(awk '{print $5, $6, $7, $8, $9}')"
+    ],
+    "additionalDirectories": [
+      "/Users/com/photogrophy"
+    ]
+  }
+}
