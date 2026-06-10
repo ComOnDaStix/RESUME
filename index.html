@@ -259,15 +259,13 @@
 
   /* hero scroller, JS-driven auto-scroll with native horizontal scroll + drag-to-slide */
   #hero-scroller {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
+    /* NOT a native scroll container — the marquee is driven by transform on the track.
+       overflow:hidden + no horizontal scroll means iOS can never trap a vertical finger
+       gesture here; vertical swipes scroll the page normally. */
+    overflow: hidden;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
-    /* pan-y lets a vertical finger gesture scroll the PAGE instead of getting trapped
-       in the carousel. The marquee still auto-scrolls via JS; desktop drag uses mouse
-       pointer events (unaffected by touch-action). */
     touch-action: pan-y;
   }
   #hero-scroller::-webkit-scrollbar { display: none; }
@@ -1314,48 +1312,42 @@
     let isDragging = false;
     let dragMoved = false;
     let dragStartX = 0;
-    let dragStartScroll = 0;
+    let dragStartOffset = 0;
+    let offset = 0; // current translateX magnitude (px the track is shifted left)
 
-    function trackHalf() { return track.scrollWidth / 2 || 1; }
+    function half() { return (track.scrollWidth / 2) || 1; } // width of one set (A == B)
+    function apply() { track.style.transform = 'translate3d(' + (-offset) + 'px,0,0)'; }
 
     function tick() {
-      // Don't compete with the page's smooth-scroll animation for frame budget
       const pageScrolling = document.body.classList.contains('is-scrolling');
       if (!reduced && !isHovering && !isDragging && !pageScrolling) {
-        scroller.scrollLeft += speed;
+        offset += speed;
       }
-      // seamless loop using set A / set B duplication
-      const half = trackHalf();
-      if (scroller.scrollLeft >= half) scroller.scrollLeft -= half;
-      else if (scroller.scrollLeft < 0) scroller.scrollLeft += half;
+      const h = half();
+      if (offset >= h) offset -= h;        // seamless wrap using the duplicated set B
+      else if (offset < 0) offset += h;
+      apply();
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
 
-    // Hover pause (desktop), pointer off the section resumes auto-slide
+    // Hover pause (desktop)
     scroller.addEventListener('mouseenter', () => { isHovering = true; });
     scroller.addEventListener('mouseleave', () => { isHovering = false; isDragging = false; scroller.classList.remove('is-dragging'); });
 
-    // Touch pause (mobile) — touching the marquee pauses, lift-off resumes after a beat
+    // Touch pause (mobile) — pause auto-advance while a finger is down; vertical page scroll
+    // still passes through because the carousel is no longer a native scroll container.
     let touchHoldTimer = null;
-    scroller.addEventListener('touchstart', () => {
-      isHovering = true;
-      clearTimeout(touchHoldTimer);
-    }, { passive: true });
-    const releaseTouch = () => {
-      clearTimeout(touchHoldTimer);
-      touchHoldTimer = setTimeout(() => { isHovering = false; }, 3500);
-    };
+    scroller.addEventListener('touchstart', () => { isHovering = true; clearTimeout(touchHoldTimer); }, { passive: true });
+    const releaseTouch = () => { clearTimeout(touchHoldTimer); touchHoldTimer = setTimeout(() => { isHovering = false; }, 3500); };
     scroller.addEventListener('touchend', releaseTouch, { passive: true });
     scroller.addEventListener('touchcancel', releaseTouch, { passive: true });
 
-    // Click-drag to slide — MOUSE ONLY (touch is handled by native horizontal scroll)
+    // Mouse drag to scrub (desktop only — touch never sets dragMoved, so taps still open the lightbox)
     scroller.addEventListener('pointerdown', (e) => {
       if (e.pointerType !== 'mouse') return;
-      isDragging = true;
-      dragMoved = false;
-      dragStartX = e.pageX;
-      dragStartScroll = scroller.scrollLeft;
+      isDragging = true; dragMoved = false;
+      dragStartX = e.pageX; dragStartOffset = offset;
     });
     scroller.addEventListener('pointermove', (e) => {
       if (!isDragging || e.pointerType !== 'mouse') return;
@@ -1363,18 +1355,13 @@
       if (Math.abs(dx) > 5) {
         if (!dragMoved) { dragMoved = true; scroller.classList.add('is-dragging'); }
         e.preventDefault();
-        scroller.scrollLeft = dragStartScroll - dx;
+        offset = dragStartOffset - dx;
       }
     });
     window.addEventListener('pointerup', (e) => {
       if (e.pointerType !== 'mouse') return;
-      if (isDragging) {
-        isDragging = false;
-        scroller.classList.remove('is-dragging');
-      }
+      if (isDragging) { isDragging = false; scroller.classList.remove('is-dragging'); }
     });
-    // If a real mouse drag occurred, suppress the trailing click so lightbox doesn't open.
-    // Touch taps never set dragMoved, so taps always reach the lightbox handler.
     scroller.addEventListener('click', (e) => {
       if (dragMoved) { e.stopPropagation(); e.preventDefault(); dragMoved = false; }
     }, true);
