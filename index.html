@@ -265,7 +265,10 @@
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
-    touch-action: pan-x;
+    /* pan-y lets a vertical finger gesture scroll the PAGE instead of getting trapped
+       in the carousel. The marquee still auto-scrolls via JS; desktop drag uses mouse
+       pointer events (unaffected by touch-action). */
+    touch-action: pan-y;
   }
   #hero-scroller::-webkit-scrollbar { display: none; }
   #hero-scroller.is-dragging { cursor: grabbing; }
@@ -1722,9 +1725,9 @@
     overlay.querySelector('#lb-prev').addEventListener('click', () => render(idx - 1));
     overlay.querySelector('#lb-next').addEventListener('click', () => render(idx + 1));
     overlay.addEventListener('click', (e) => {
-      // Tap on backdrop (outside image/buttons) closes the lightbox
-      if (e.target === overlay) { close(); return; }
-      // Tap on the image: right half → next, left half → previous
+      // Backdrop taps do NOT close — only the X button (or Escape) closes, so fast taps
+      // and scroll gestures on the dark area can't accidentally dismiss the lightbox.
+      // Tap on the image: right half → next, left half → previous.
       if (e.target.tagName === 'IMG' && e.target.closest('.lb-stage')) {
         const rect = e.target.getBoundingClientRect();
         const tapX = e.clientX;
