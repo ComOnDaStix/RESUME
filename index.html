@@ -1624,8 +1624,7 @@
       idx = safeStart;
       countEl.textContent = (idx + 1) + ' / ' + group.length;
 
-      // Reset only stale state (transforms, is-dragging) — KEEP src and is-active so the
-      // previously-shown image remains in its slot for a clean crossfade into the new image
+      // Reset stale state
       imgA.removeAttribute('style');
       imgB.removeAttribute('style');
       imgA.classList.remove('is-dragging');
@@ -1637,16 +1636,28 @@
       document.body.classList.add('lb-open');
       overlay.classList.add('is-open');
 
-      const hasPrevious = imgA.classList.contains('is-active') || imgB.classList.contains('is-active');
-      if (hasPrevious) {
-        // Use render() to crossfade — old image stays visible while new loads on the inactive slot
-        render(safeStart);
-      } else {
-        // First open ever — direct set imgA
-        imgA.src = target.src;
-        imgA.alt = target.alt || '';
+      // Display the target through imgA. Hide imgB and any OLD content on imgA first, so the
+      // previously-viewed image can never flash. The target is preloaded (group + page-load
+      // preloads), so revealing it is effectively instant — just a clean 0.18s fade-in.
+      imgB.classList.remove('is-active');
+      active = imgA;
+      imgA.alt = target.alt || '';
+      const alreadyShown = imgA.getAttribute('src') === target.src && imgA.complete && imgA.naturalWidth;
+      if (alreadyShown) {
         imgA.classList.add('is-active');
-        active = imgA;
+      } else {
+        imgA.classList.remove('is-active');            // hide old immediately
+        const tok = ++token;
+        const reveal = () => {
+          if (tok !== token) return;
+          imgA.src = target.src;                       // swap while invisible (opacity 0)
+          requestAnimationFrame(() => { if (tok === token) imgA.classList.add('is-active'); });
+        };
+        const pre = new Image();
+        pre.onload = reveal;
+        pre.onerror = reveal;
+        pre.src = target.src;
+        if (pre.complete && pre.naturalWidth) reveal();
       }
 
       // Background-preload all so prev/next is instant
@@ -1658,11 +1669,15 @@
       closing = true;
       overlay.classList.remove('is-open');
       document.body.classList.remove('lb-open');
-      // Restore the scroll position the page was at when the lightbox opened
       document.body.style.top = '';
+      // Restore scroll INSTANTLY. The page has `scroll-behavior: smooth` globally, which would
+      // otherwise animate from the top (where the fixed body reset to) down to the saved spot.
+      const htmlEl = document.documentElement;
+      const prevBehavior = htmlEl.style.scrollBehavior;
+      htmlEl.style.scrollBehavior = 'auto';
       window.scrollTo(0, savedScrollY);
+      htmlEl.style.scrollBehavior = prevBehavior;
       closeTimer = setTimeout(() => {
-        // KEEP src and is-active alive — they're the source for the next open's crossfade.
         imgA.removeAttribute('style');
         imgB.removeAttribute('style');
         closing = false;
