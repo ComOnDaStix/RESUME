@@ -567,7 +567,7 @@
 <!-- ─────────────────────────  HEADER  ───────────────────────── -->
 <header id="nav" class="fixed top-0 left-0 right-0 z-50">
   <div class="px-6 sm:px-10 lg:px-14 h-16 flex items-center justify-between gap-6">
-    <a href="#top" class="display text-2xl tracking-wide lowercase"><span class="text-rust">.</span>com</a>
+    <a id="logo-home" href="#top" class="display text-2xl tracking-wide lowercase"><span class="text-rust">.</span>com</a>
     <button id="menu-toggle" class="navlink flex items-center gap-3" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay">
       <span>Menu</span>
       <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true">
@@ -1335,10 +1335,36 @@
     scroller.addEventListener('mouseenter', () => { isHovering = true; });
     scroller.addEventListener('mouseleave', () => { isHovering = false; isDragging = false; scroller.classList.remove('is-dragging'); });
 
-    // Touch pause (mobile) — pause auto-advance while a finger is down; vertical page scroll
-    // still passes through because the carousel is no longer a native scroll container.
+    // Touch: drag horizontally to scrub the marquee, swipe vertically to scroll the page.
+    // touch-action: pan-y reserves vertical panning for the browser, so a horizontal
+    // touchmove is ours to handle. Axis-lock on the first move so a vertical scroll is
+    // never mistaken for a carousel drag (and vice-versa).
     let touchHoldTimer = null;
-    scroller.addEventListener('touchstart', () => { isHovering = true; clearTimeout(touchHoldTimer); }, { passive: true });
+    let tStartX = 0, tStartY = 0, tStartOffset = 0, tAxis = null;
+    scroller.addEventListener('touchstart', (e) => {
+      isHovering = true;
+      clearTimeout(touchHoldTimer);
+      const t = e.touches[0];
+      tStartX = t.clientX; tStartY = t.clientY;
+      tStartOffset = offset;
+      tAxis = null;
+      dragMoved = false;
+    }, { passive: true });
+    scroller.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      const dx = t.clientX - tStartX;
+      const dy = t.clientY - tStartY;
+      if (!tAxis && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+        tAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      }
+      if (tAxis === 'x') {
+        e.preventDefault();              // own this gesture — move the marquee with the finger
+        dragMoved = true;
+        offset = tStartOffset - dx;      // tick() applies + wraps it next frame
+        apply();
+      }
+      // tAxis === 'y' → do nothing; the browser scrolls the page (pan-y)
+    }, { passive: false });
     const releaseTouch = () => { clearTimeout(touchHoldTimer); touchHoldTimer = setTimeout(() => { isHovering = false; }, 3500); };
     scroller.addEventListener('touchend', releaseTouch, { passive: true });
     scroller.addEventListener('touchcancel', releaseTouch, { passive: true });
@@ -1425,10 +1451,28 @@
     requestAnimationFrame(step);
   }
 
+  // ── Logo (.com): always return to the top of the page from anywhere ──
+  (function(){
+    const logo = document.getElementById('logo-home');
+    if (!logo) return;
+    logo.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Close the menu overlay if it happens to be open
+      const menu = document.getElementById('menu-overlay');
+      if (menu && menu.classList.contains('is-open')) {
+        menu.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+        const mt = document.getElementById('menu-toggle');
+        if (mt) mt.setAttribute('aria-expanded', 'false');
+      }
+      smoothScrollTo(0);
+    });
+  })();
+
   // ── Preload all gallery images after first paint so navigation never waits on the network ──
   window.addEventListener('load', () => {
     setTimeout(() => {
-      document.querySelectorAll('img[loading="lazy" decoding="async"]').forEach(img => {
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
         if (img.src) { const p = new Image(); p.src = img.src; }
       });
     }, 600); // wait until critical resources have settled
