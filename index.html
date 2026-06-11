@@ -705,17 +705,19 @@
     <div id="recent-coverflow" class="cf mt-8" tabindex="0" aria-roledescription="carousel" aria-label="Recent frames">
       <div class="cf-stage">
         <div class="cf-track">
-          <button type="button" class="cf-card" data-i="0"><img src="Assests/web/car shoot-02.jpg" alt="" decoding="async"/></button>
-          <button type="button" class="cf-card" data-i="1"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-orient="wide" data-i="0"><img src="Assests/web/car shoot-02.jpg" alt="" decoding="async"/></button>
+          <button type="button" class="cf-card" data-orient="wide" data-i="1"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="cf-card" data-i="2"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="cf-card" data-i="3"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-orient="wide" data-i="3"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="cf-card" data-i="4"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="cf-card" data-i="5"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="cf-card" data-i="6"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="cf-card" data-i="7"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="cf-card" data-i="8"><img src="Assests/web/F-4.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="cf-card" data-i="9"><img src="Assests/web/Aa FIlm-14.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="cf-card" data-i="10"><img src="Assests/web/9-25-24 Chi LookBook-32.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-orient="wide" data-i="9"><img src="Assests/web/Aa FIlm-14.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-orient="wide" data-i="10"><img src="Assests/web/9-25-24 Chi LookBook-32.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="11"><img src="Assests/web/9-25-24 Chi LookBook-33.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="12"><img src="Assests/web/11-27-24-17.jpg" alt="" loading="lazy" decoding="async"/></button>
         </div>
         <button type="button" class="cf-nav cf-prev" aria-label="Previous frame">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -1358,46 +1360,59 @@
     const root = document.getElementById('recent-coverflow');
     if (!root) return;
     const stage = root.querySelector('.cf-stage');
-    const cards = Array.from(root.querySelectorAll('.cf-card'));
+    const allCards = Array.from(root.querySelectorAll('.cf-card'));
     const prevBtn = root.querySelector('.cf-prev');
     const nextBtn = root.querySelector('.cf-next');
-    const N = cards.length;
-    if (!N) return;
+    if (!allCards.length) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobileMQ = window.matchMedia('(max-width: 640px)');
     let index = 0;
     let hovering = false, onScreen = false;   // autoplay only runs when on-screen and not hovered
 
-    const aspects = new Array(N).fill(null);
-    const imgOf = (i) => cards[i] && cards[i].querySelector('img');
-    function grabAspect(i) {
-      const img = imgOf(i);
+    // Active set: desktop shows every frame; mobile shows only the TALL (portrait) frames —
+    // the wide/landscape ones (data-orient="wide") are dropped from the rotation and hidden.
+    let active = allCards;
+    function computeActive() {
+      active = mobileMQ.matches ? allCards.filter(c => c.dataset.orient !== 'wide') : allCards;
+      if (!active.length) active = allCards;                          // safety: never empty
+      allCards.forEach(c => { c.style.display = active.indexOf(c) === -1 ? 'none' : ''; });
+      if (index >= active.length) index = 0;
+    }
+
+    const imgOf = (card) => card && card.querySelector('img');
+    function grabAspect(card) {
+      const img = imgOf(card);
       if (!img || !img.naturalWidth) return;
-      aspects[i] = img.naturalWidth / img.naturalHeight;
+      card._aspect = img.naturalWidth / img.naturalHeight;
       layout();
     }
-    function ensureLoaded(i) {
-      const img = imgOf(i);
+    function ensureLoaded(card) {
+      const img = imgOf(card);
       if (!img) return;
-      if (img.complete) { grabAspect(i); return; }
+      if (img.complete) { grabAspect(card); return; }
       img.loading = 'eager';
-      img.addEventListener('load', () => grabAspect(i), { once: true });
+      img.addEventListener('load', () => grabAspect(card), { once: true });
     }
-    const neighbours = () => [index, (index+1)%N, (index-1+N)%N, (index+2)%N, (index-2+N)%N];
+    const neighbours = () => {
+      const N = active.length;
+      return [0, 1, -1, 2, -2].map(d => active[((index + d) % N + N) % N]);
+    };
 
-    // Place every card around the centre. Each card is sized to its OWN photo (fit inside the
-    // fixed stage), so the centred image always shows in full — flush, never cropped — while the
-    // stage height stays constant, so the section never moves and the page never scrolls.
+    // Place every active card around the centre. Each card is sized to its OWN photo (fit inside
+    // the fixed stage), so the centred image always shows in full — flush, never cropped — while
+    // the stage height stays constant, so the section never moves and the page never scrolls.
     function layout() {
+      const N = active.length;
       const W = stage.clientWidth, H = stage.clientHeight;
       const spacing = Math.min(W * 0.36, 340);
       const maxW = W * 0.97;
-      for (let i = 0; i < N; i++) {
-        const card = cards[i];
-        let pos = (i - index + N) % N;
+      for (let k = 0; k < N; k++) {
+        const card = active[k];
+        let pos = (k - index + N) % N;
         if (pos > N / 2) pos -= N;                    // shortest way round → ~[-N/2 .. N/2]
-        const a = aspects[i] || 0.72;
+        const a = card._aspect || 0.72;
         let h = H, w = h * a;
-        if (w > maxW) { w = maxW; h = w / a; }        // wide landscape on a narrow screen → fit width
+        if (w > maxW) { w = maxW; h = w / a; }        // wide image on a narrow screen → fit width
         card.style.width  = Math.round(w) + 'px';
         card.style.height = Math.round(h) + 'px';
         const abs = Math.abs(pos), isCenter = abs === 0;
@@ -1416,6 +1431,7 @@
       }
     }
     function go(i) {
+      const N = active.length;
       index = ((i % N) + N) % N;                      // wrap around (endless loop)
       neighbours().forEach(ensureLoaded);
       layout();
@@ -1430,9 +1446,10 @@
     let suppressClick = false;                         // stop a swipe/drag from also firing a card click
     prevBtn.addEventListener('click', () => { suppressClick = false; go(index - 1); start(); });
     nextBtn.addEventListener('click', () => { suppressClick = false; go(index + 1); start(); });
-    cards.forEach((c, i) => c.addEventListener('click', () => {
+    allCards.forEach((c) => c.addEventListener('click', () => {
       if (suppressClick) { suppressClick = false; return; }
-      if (i !== index) { go(i); start(); }
+      const k = active.indexOf(c);
+      if (k !== -1 && k !== index) { go(k); start(); }
     }));
     root.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft')  { go(index - 1); start(); e.preventDefault(); }
@@ -1474,11 +1491,14 @@
     window.addEventListener('pointercancel', endPDrag);
 
     window.addEventListener('resize', layout);
+    // Crossing the mobile/desktop breakpoint re-builds the active set (wide frames in/out).
+    mobileMQ.addEventListener('change', () => { index = 0; computeActive(); neighbours().forEach(ensureLoaded); layout(); start(); });
 
-    cards.forEach((c, i) => {
-      c.setAttribute('aria-label', 'Show frame ' + (i + 1) + ' of ' + N);  // name the otherwise-empty buttons
-      const img = imgOf(i);
-      if (img && img.complete) grabAspect(i);
+    computeActive();
+    allCards.forEach((c, i) => {
+      c.setAttribute('aria-label', 'Show frame ' + (i + 1));  // name the otherwise-empty buttons
+      const img = imgOf(c);
+      if (img && img.complete) grabAspect(c);
     });
     neighbours().forEach(ensureLoaded);
     layout();
