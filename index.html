@@ -257,61 +257,57 @@
 
   .video-tile video { background: #000; }
 
-  /* Recent Frames — big-stage carousel with an expanding thumbnail rail.
-     Browse by dragging the stage, the ‹ › arrows, or tapping a thumbnail. */
-  .fc { max-width: 1000px; margin: 0 auto; }
-  .fc-main {
-    position: relative; overflow: hidden; border-radius: 12px;
-    background: #1a1814;
-    aspect-ratio: 16 / 9;            /* fallback only — JS sizes the stage to each photo's shape */
-    width: 100%; margin: 0 auto;
-    touch-action: pan-y;             /* horizontal drag is ours; vertical scrolls the page */
-    cursor: grab; user-select: none; -webkit-user-select: none;
-    transition: width .5s cubic-bezier(.22,.61,.36,1), height .5s cubic-bezier(.22,.61,.36,1);
+  /* Recent Frames — 3D coverflow. The stage is a FIXED height, so the section never
+     reflows and the page never jumps/scrolls when the centred photo changes shape.
+     Each card is sized to its own photo, so every image is shown in full — flush,
+     no crop, no bars. JS positions the cards (translate/scale/rotateY). */
+  .cf { width: 100%; max-width: 1100px; margin: 0 auto; }
+  .cf-stage {
+    position: relative; width: 100%;
+    height: 460px;                 /* FIXED — the section's height is constant */
+    overflow: hidden;              /* clip the angled side cards; no sideways page scroll */
+    clip-path: inset(0);           /* iOS Safari: overflow:hidden alone won't clip 3D children */
+    isolation: isolate;
+    touch-action: pan-y;           /* vertical swipes scroll the page; we own horizontal */
   }
-  .fc-main.is-dragging { cursor: grabbing; }
-  .fc-track { display: flex; height: 100%; will-change: transform;
-    transition: transform .55s cubic-bezier(.22,.61,.36,1); }
-  .fc-main.is-dragging .fc-track { transition: none; }
-  .fc-slide { flex: 0 0 100%; width: 100%; height: 100%; }
-  /* each photo fills its frame exactly (the frame already matches its aspect → no crop, no bars) */
-  .fc-slide img { width: 100%; height: 100%; object-fit: cover; display: block;
-    pointer-events: none; -webkit-user-drag: none; }
-
-  .fc-arrow {
+  .cf-track { position: absolute; inset: 0; perspective: 1500px; }
+  .cf-card {
+    position: absolute; top: 50%; left: 50%;
+    height: 100%; padding: 0; border: 0; background: none; cursor: pointer;
+    transform: translate(-50%, -50%); transform-origin: center center;
+    opacity: 0; backface-visibility: hidden;
+    transition: transform .55s cubic-bezier(.22,.61,.36,1), opacity .55s ease, filter .55s ease;
+    /* will-change is set per-card in JS (only the ~5 visible cards), to avoid 11 permanent layers */
+  }
+  .cf-card img {
+    /* object-fit: contain — the card is already sized to the photo's aspect, so this fills it
+       exactly (flush) AND guarantees no crop even before the image's real aspect is known. */
+    width: 100%; height: 100%; object-fit: contain; display: block;
+    border-radius: 16px; border: 1px solid rgba(242,233,205,.12);
+    box-shadow: 0 28px 60px -22px rgba(0,0,0,.75);
+    pointer-events: none; -webkit-user-drag: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cf-card { transition: none; }
+  }
+  .cf-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
-    width: 44px; height: 44px; border-radius: 9999px; z-index: 10;
+    width: 44px; height: 44px; border-radius: 9999px; z-index: 40;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,.92); color: #0E0E0E; border: 0;
+    background: rgba(255,255,255,.9); color: #0E0E0E; border: 0;
     box-shadow: 0 8px 22px -8px rgba(0,0,0,.6);
-    opacity: .78; cursor: pointer;
+    opacity: .82; cursor: pointer;
     transition: opacity .2s, transform .2s, background-color .2s;
   }
-  .fc-arrow:hover { opacity: 1; background: #fff; }
-  .fc-arrow:active { transform: translateY(-50%) scale(.9); }
-  .fc-arrow:disabled { opacity: .32; cursor: not-allowed; box-shadow: none; }
-  .fc-prev { left: 16px; } .fc-next { right: 16px; }
-  .fc-arrow svg { width: 22px; height: 22px; display: block; }
-
-  .fc-thumbs { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
-  .fc-thumbs::-webkit-scrollbar { display: none; }
-  .fc-thumbs-row { display: flex; gap: 4px; height: 80px; width: max-content; padding: 2px; }
-  .fc-thumb {
-    position: relative; flex: 0 0 auto; height: 100%; width: 36px;
-    overflow: hidden; border-radius: 5px; padding: 0; border: 0; background: none;
-    cursor: pointer; opacity: .5;
-    transition: width .3s ease-out, margin .3s ease-out, opacity .3s;
-  }
-  .fc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block;
-    pointer-events: none; -webkit-user-drag: none; }
-  .fc-thumb:hover { opacity: .85; }
-  .fc-thumb.active { width: 126px; margin: 0 2px; opacity: 1; }
+  .cf-nav:hover { opacity: 1; background: #fff; }
+  .cf-nav:active { transform: translateY(-50%) scale(.9); }
+  .cf-nav svg { width: 22px; height: 22px; display: block; }
+  .cf-prev { left: 8px; } .cf-next { right: 8px; }
+  @media (min-width: 640px) { .cf-prev { left: 24px; } .cf-next { right: 24px; } }
   @media (max-width: 640px) {
-    .fc-main { border-radius: 10px; }
-    .fc-arrow { width: 38px; height: 38px; }
-    .fc-thumbs-row { height: 60px; }
-    .fc-thumb { width: 28px; }
-    .fc-thumb.active { width: 96px; }
+    .cf-stage { height: 380px; }
+    .cf-nav { width: 38px; height: 38px; }
+    .cf-card img { border-radius: 12px; }
   }
 
   /* Category tile */
@@ -698,52 +694,37 @@
       <p class="eyebrow whitespace-nowrap fade-up" style="animation-delay: 1.4s;">Concept · Capture · Delivery</p>
     </div>
 
-    <!-- Recent Frames — horizontal scroll area (scroll / drag the bar / arrows) -->
+    <!-- Recent Frames — auto-advancing 3D coverflow (‹ › / swipe / tap a side frame) -->
     <div class="mt-24 sm:mt-36 lg:mt-48 fade-up fade-up-5">
       <div class="flex items-center gap-5 mb-5 sm:mb-6">
         <p class="eyebrow whitespace-nowrap">Recent Frames</p>
         <div class="rule-rust flex-1"></div>
       </div>
       <div class="rule"></div>
-    <div id="frames-carousel" class="fc mt-6" tabindex="0">
-      <div class="fc-main">
-        <div class="fc-track">
-          <div class="fc-slide"><img src="Assests/web/car shoot-02.jpg" alt="" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/F-4.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/Aa FIlm-14.jpg" alt="" loading="lazy" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/9-25-24 Chi LookBook-32.jpg" alt="" loading="lazy" decoding="async"/></div>
+    <div id="recent-coverflow" class="cf mt-8" tabindex="0" aria-roledescription="carousel" aria-label="Recent frames">
+      <div class="cf-stage">
+        <div class="cf-track">
+          <button type="button" class="cf-card" data-i="0"><img src="Assests/web/car shoot-02.jpg" alt="" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="1"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="2"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="3"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="4"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="5"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="6"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="7"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="8"><img src="Assests/web/F-4.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="9"><img src="Assests/web/Aa FIlm-14.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="cf-card" data-i="10"><img src="Assests/web/9-25-24 Chi LookBook-32.jpg" alt="" loading="lazy" decoding="async"/></button>
         </div>
-        <button type="button" class="fc-arrow fc-prev" aria-label="Previous frame">
+        <button type="button" class="cf-nav cf-prev" aria-label="Previous frame">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
-        <button type="button" class="fc-arrow fc-next" aria-label="Next frame">
+        <button type="button" class="cf-nav cf-next" aria-label="Next frame">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
       </div>
-      <div class="fc-thumbs">
-        <div class="fc-thumbs-row">
-          <button type="button" class="fc-thumb" data-i="0"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="1"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="2"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="3"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="4"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="5"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="6"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="7"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="8"><img src="Assests/web/F-4.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="9"><img src="Assests/web/Aa FIlm-14.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="10"><img src="Assests/web/9-25-24 Chi LookBook-32.jpg" alt="" loading="lazy" decoding="async"/></button>
-        </div>
-      </div>
     </div>
-      <div class="rule mt-6"></div>
+      <div class="rule mt-8"></div>
     </div>
   </div>
 </section>
@@ -1371,109 +1352,136 @@
   }, { threshold: 0.05, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('.fade-on-view').forEach(el => fadeObserver.observe(el));
 
-  // ── Recent Frames: big-stage carousel with an expanding thumbnail rail ──
+  // ── Recent Frames: auto-advancing 3D coverflow ──
   (function(){
-    const root = document.getElementById('frames-carousel');
+    const root = document.getElementById('recent-coverflow');
     if (!root) return;
-    const main   = root.querySelector('.fc-main');
-    const track  = root.querySelector('.fc-track');
-    const slides = Array.from(root.querySelectorAll('.fc-slide'));
-    const thumbsWrap = root.querySelector('.fc-thumbs');
-    const thumbs = Array.from(root.querySelectorAll('.fc-thumb'));
-    const prevBtn = root.querySelector('.fc-prev');
-    const nextBtn = root.querySelector('.fc-next');
-    const N = slides.length;
+    const stage = root.querySelector('.cf-stage');
+    const cards = Array.from(root.querySelectorAll('.cf-card'));
+    const prevBtn = root.querySelector('.cf-prev');
+    const nextBtn = root.querySelector('.cf-next');
+    const N = cards.length;
     if (!N) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let index = 0;
+    let hovering = false, onScreen = false;   // autoplay only runs when on-screen and not hovered
 
-    // Adaptive stage: the frame takes each photo's own aspect ratio, so portraits get a tall
-    // frame and landscapes a wide one — every image fills its frame flush (no crop, no bars).
     const aspects = new Array(N).fill(null);
-    function sizeStage() {
-      const a = aspects[index] || (16 / 9);                  // fallback until the photo loads
-      const containerW = root.clientWidth || main.clientWidth || 1;
-      const maxH = Math.min(window.innerHeight * 0.72, 660); // keep tall portraits in view
-      let w = containerW, h = w / a;
-      if (h > maxH) { h = maxH; w = h * a; }                 // cap height → narrower, centered frame
-      main.style.width  = Math.round(w) + 'px';
-      main.style.height = Math.round(h) + 'px';
-    }
+    const imgOf = (i) => cards[i] && cards[i].querySelector('img');
     function grabAspect(i) {
-      const img = slides[i] && slides[i].querySelector('img');
+      const img = imgOf(i);
       if (!img || !img.naturalWidth) return;
       aspects[i] = img.naturalWidth / img.naturalHeight;
-      if (i === index) sizeStage();
+      layout();
     }
-    function ensureLoaded(i) {                                // load just the current photo + its neighbours
-      if (i < 0 || i >= N) return;
-      const img = slides[i] && slides[i].querySelector('img');
+    function ensureLoaded(i) {
+      const img = imgOf(i);
       if (!img) return;
       if (img.complete) { grabAspect(i); return; }
-      img.loading = 'eager';                                 // force this off-screen slide to fetch now
+      img.loading = 'eager';
       img.addEventListener('load', () => grabAspect(i), { once: true });
     }
-    slides.forEach((s, i) => { const img = s.querySelector('img'); if (img && img.complete) grabAspect(i); });
+    const neighbours = () => [index, (index+1)%N, (index-1+N)%N, (index+2)%N, (index-2+N)%N];
 
-    function centerThumb() {
-      const t = thumbs[index];
-      if (!t) return;
-      const target = t.offsetLeft - (thumbsWrap.clientWidth / 2) + (t.offsetWidth / 2);
-      thumbsWrap.scrollTo({ left: target, behavior: 'smooth' });
+    // Place every card around the centre. Each card is sized to its OWN photo (fit inside the
+    // fixed stage), so the centred image always shows in full — flush, never cropped — while the
+    // stage height stays constant, so the section never moves and the page never scrolls.
+    function layout() {
+      const W = stage.clientWidth, H = stage.clientHeight;
+      const spacing = Math.min(W * 0.34, 300);
+      const maxW = W * 0.9;
+      for (let i = 0; i < N; i++) {
+        const card = cards[i];
+        let pos = (i - index + N) % N;
+        if (pos > N / 2) pos -= N;                    // shortest way round → ~[-N/2 .. N/2]
+        const a = aspects[i] || 0.72;
+        let h = H, w = h * a;
+        if (w > maxW) { w = maxW; h = w / a; }        // wide landscape on a narrow screen → fit width
+        card.style.width  = Math.round(w) + 'px';
+        card.style.height = Math.round(h) + 'px';
+        const abs = Math.abs(pos), isCenter = abs === 0;
+        const scale = isCenter ? 1 : abs === 1 ? 0.82 : 0.66;
+        card.style.transform =
+          'translate(-50%,-50%) translateX(' + (pos * spacing) + 'px) scale(' + scale + ') rotateY(' + (pos * -9) + 'deg)';
+        card.style.zIndex = String(isCenter ? 30 : abs === 1 ? 20 : 10);
+        card.style.opacity = isCenter ? '1' : abs === 1 ? '0.4' : '0';
+        card.style.filter = isCenter ? 'none' : 'blur(3px)';
+        card.style.visibility = abs > 1 ? 'hidden' : 'visible';
+        card.style.pointerEvents = (isCenter || abs > 1) ? 'none' : 'auto';  // only side cards are clickable
+        card.style.willChange = abs <= 2 ? 'transform, opacity, filter' : 'auto'; // promote only visible cards
+        card.tabIndex = (isCenter || abs > 1) ? -1 : 0;                 // only side cards are tabbable
+        card.setAttribute('aria-hidden', abs > 1 ? 'true' : 'false');  // hide off-screen cards from SR
+        if (isCenter) card.setAttribute('aria-current', 'true'); else card.removeAttribute('aria-current');
+      }
     }
-    function render() {
-      ensureLoaded(index); ensureLoaded(index - 1); ensureLoaded(index + 1);
-      sizeStage();
-      track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
-      thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
-      prevBtn.disabled = index === 0;
-      nextBtn.disabled = index === N - 1;
-      centerThumb();
+    function go(i) {
+      index = ((i % N) + N) % N;                      // wrap around (endless loop)
+      neighbours().forEach(ensureLoaded);
+      layout();
     }
-    function go(i) { index = Math.max(0, Math.min(N - 1, i)); render(); }
 
-    prevBtn.addEventListener('click', () => go(index - 1));
-    nextBtn.addEventListener('click', () => go(index + 1));
-    thumbs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+    // Autoplay — only runs when the carousel is on-screen, the tab is visible, the pointer isn't
+    // hovering it, and reduced-motion isn't requested. (Keeps the timer + 3D repaints idle otherwise.)
+    let timer = null;
+    function start() { if (reduced || hovering || !onScreen || document.hidden) return; stop(); timer = setInterval(() => go(index + 1), 4000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    let suppressClick = false;                         // stop a swipe/drag from also firing a card click
+    prevBtn.addEventListener('click', () => { suppressClick = false; go(index - 1); start(); });
+    nextBtn.addEventListener('click', () => { suppressClick = false; go(index + 1); start(); });
+    cards.forEach((c, i) => c.addEventListener('click', () => {
+      if (suppressClick) { suppressClick = false; return; }
+      if (i !== index) { go(i); start(); }
+    }));
     root.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft')  { go(index - 1); e.preventDefault(); }
-      else if (e.key === 'ArrowRight') { go(index + 1); e.preventDefault(); }
+      if (e.key === 'ArrowLeft')  { go(index - 1); start(); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { go(index + 1); start(); e.preventDefault(); }
     });
+    stage.addEventListener('mouseenter', () => { hovering = true; stop(); });
+    stage.addEventListener('mouseleave', () => { hovering = false; start(); });
 
-    // Drag / swipe the stage. Pointer capture keeps the gesture ours once it goes horizontal;
-    // touch-action:pan-y means a vertical swipe scrolls the page instead (no scroll-trap).
-    let dragging = false, startX = 0, dx = 0, pid = null, captured = false;
-    main.addEventListener('dragstart', (e) => e.preventDefault());   // no native image ghost-drag
-    main.addEventListener('pointerdown', (e) => {
-      dragging = true; captured = false; startX = e.clientX; dx = 0; pid = e.pointerId;
-    });
-    main.addEventListener('pointermove', (e) => {
-      if (!dragging) return;
-      dx = e.clientX - startX;
-      if (!captured && Math.abs(dx) > 4) {
-        captured = true;
-        main.classList.add('is-dragging');
-        try { main.setPointerCapture(pid); } catch (_) {}
-      }
-      if (captured) {
-        const w = main.offsetWidth || 1;
-        track.style.transform = 'translate3d(' + (-index * 100 + (dx / w) * 100) + '%,0,0)';
-      }
-    });
-    function endDrag() {
-      if (!dragging) return;
+    // Pause autoplay when off-screen or the tab is hidden (resume when back).
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => { onScreen = es[0].isIntersecting; if (onScreen) start(); else stop(); }, { threshold: 0.2 }).observe(root);
+    } else { onScreen = true; }
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+
+    // Swipe (touch): horizontal navigates, vertical scrolls the page (we never preventDefault).
+    let sx = 0, sy = 0, sActive = false;
+    stage.addEventListener('touchstart', (e) => { suppressClick = false; const t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; sActive = true; stop(); }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      if (!sActive) return; sActive = false;
+      const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3) { suppressClick = true; go(dx < 0 ? index + 1 : index - 1); }
+      start();
+    }, { passive: true });
+    stage.addEventListener('touchcancel', () => { sActive = false; start(); }, { passive: true });
+
+    // Mouse drag (desktop) for parity with the old carousel.
+    let dragging = false, dStartX = 0, dMoved = 0, dPid = null;
+    stage.addEventListener('dragstart', (e) => e.preventDefault());
+    stage.addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') return; suppressClick = false; dragging = true; dStartX = e.clientX; dMoved = 0; dPid = e.pointerId; stop(); });
+    stage.addEventListener('pointermove', (e) => { if (!dragging || e.pointerType === 'touch') return; dMoved = e.clientX - dStartX; if (Math.abs(dMoved) > 4) { try { stage.setPointerCapture(dPid); } catch (_) {} } });
+    function endPDrag(e) {
+      if (!dragging || (e && e.pointerType === 'touch')) return;
       dragging = false;
-      main.classList.remove('is-dragging');
-      if (pid !== null) { try { main.releasePointerCapture(pid); } catch (_) {} pid = null; }
-      const w = main.offsetWidth || 1;
-      if (Math.abs(dx) > w * 0.18) go(dx < 0 ? index + 1 : index - 1);
-      else render();                                                 // didn't pass threshold → snap back
-      dx = 0;
+      if (dPid !== null) { try { stage.releasePointerCapture(dPid); } catch (_) {} dPid = null; }
+      if (Math.abs(dMoved) > 50) { suppressClick = true; go(dMoved < 0 ? index + 1 : index - 1); }
+      start(); dMoved = 0;
     }
-    window.addEventListener('pointerup', endDrag);
-    window.addEventListener('pointercancel', endDrag);
+    window.addEventListener('pointerup', endPDrag);
+    window.addEventListener('pointercancel', endPDrag);
 
-    window.addEventListener('resize', () => { render(); });
-    render();
+    window.addEventListener('resize', layout);
+
+    cards.forEach((c, i) => {
+      c.setAttribute('aria-label', 'Show frame ' + (i + 1) + ' of ' + N);  // name the otherwise-empty buttons
+      const img = imgOf(i);
+      if (img && img.complete) grabAspect(i);
+    });
+    neighbours().forEach(ensureLoaded);
+    layout();
+    start();
   })();
 
   // ── "View More" buttons for trimmed galleries ──
