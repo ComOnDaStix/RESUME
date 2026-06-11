@@ -472,6 +472,31 @@
   body.is-scrolling .img-frame::after { display: none !important; }
   body.is-scrolling .matted { box-shadow: none !important; }
 
+  /* ── Touch / mobile performance ───────────────────────────────────────────────
+     backdrop-filter blur and the SVG film-grain overlays are the costly things to
+     composite on every scroll frame; on phones they make touch-scrolling stutter.
+     Drop them on touch / small screens for a consistently smooth scroll — desktop,
+     which handles them fine, keeps the full treatment. */
+  @media (hover: none), (max-width: 820px) {
+    body::after { display: none !important; }           /* full-screen film grain */
+    .img-frame::after { display: none !important; }     /* per-image grain (mix-blend, one layer each) */
+    #nav, #nav.scrolled {
+      backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+    }
+    #nav.scrolled { background-color: rgba(14,14,14,.92) !important; }
+    #lightbox {
+      backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+      background-color: rgba(14,14,14,.975) !important;
+    }
+    #lightbox button, #lightbox #lb-counter {
+      backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+    }
+    #menu-overlay {
+      backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+      background-color: rgba(14,14,14,.985) !important;
+    }
+  }
+
   /* Fullscreen menu overlay */
   #menu-overlay {
     position: fixed; inset: 0; z-index: 90;
@@ -683,14 +708,17 @@
     <div id="frames-carousel" class="fc mt-6" tabindex="0">
       <div class="fc-main">
         <div class="fc-track">
-          <div class="fc-slide"><img src="Assests/web/M1-2.jpg" alt="" decoding="async"/></div>
-          <div class="fc-slide"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/car shoot-02.jpg" alt="" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></div>
           <div class="fc-slide"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></div>
           <div class="fc-slide"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></div>
           <div class="fc-slide"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></div>
           <div class="fc-slide"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></div>
           <div class="fc-slide"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></div>
           <div class="fc-slide"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/F-4.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/Aa FIlm-14.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/9-25-24 Chi LookBook-32.jpg" alt="" loading="lazy" decoding="async"/></div>
         </div>
         <button type="button" class="fc-arrow fc-prev" aria-label="Previous frame">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -701,14 +729,17 @@
       </div>
       <div class="fc-thumbs">
         <div class="fc-thumbs-row">
-          <button type="button" class="fc-thumb" data-i="0"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></button>
-          <button type="button" class="fc-thumb" data-i="1"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="0"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="1"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="fc-thumb" data-i="2"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="fc-thumb" data-i="3"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="fc-thumb" data-i="4"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="fc-thumb" data-i="5"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="fc-thumb" data-i="6"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></button>
           <button type="button" class="fc-thumb" data-i="7"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="8"><img src="Assests/web/F-4.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="9"><img src="Assests/web/Aa FIlm-14.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="10"><img src="Assests/web/9-25-24 Chi LookBook-32.jpg" alt="" loading="lazy" decoding="async"/></button>
         </div>
       </div>
     </div>
@@ -1367,18 +1398,21 @@
       main.style.width  = Math.round(w) + 'px';
       main.style.height = Math.round(h) + 'px';
     }
-    slides.forEach((s, i) => {
-      const img = s.querySelector('img');
+    function grabAspect(i) {
+      const img = slides[i] && slides[i].querySelector('img');
+      if (!img || !img.naturalWidth) return;
+      aspects[i] = img.naturalWidth / img.naturalHeight;
+      if (i === index) sizeStage();
+    }
+    function ensureLoaded(i) {                                // load just the current photo + its neighbours
+      if (i < 0 || i >= N) return;
+      const img = slides[i] && slides[i].querySelector('img');
       if (!img) return;
-      img.loading = 'eager';                                 // need real dimensions to size the stage
-      const grab = () => {
-        if (!img.naturalWidth) return;
-        aspects[i] = img.naturalWidth / img.naturalHeight;
-        if (i === index) sizeStage();
-      };
-      if (img.complete) grab();
-      img.addEventListener('load', grab);
-    });
+      if (img.complete) { grabAspect(i); return; }
+      img.loading = 'eager';                                 // force this off-screen slide to fetch now
+      img.addEventListener('load', () => grabAspect(i), { once: true });
+    }
+    slides.forEach((s, i) => { const img = s.querySelector('img'); if (img && img.complete) grabAspect(i); });
 
     function centerThumb() {
       const t = thumbs[index];
@@ -1387,6 +1421,7 @@
       thumbsWrap.scrollTo({ left: target, behavior: 'smooth' });
     }
     function render() {
+      ensureLoaded(index); ensureLoaded(index - 1); ensureLoaded(index + 1);
       sizeStage();
       track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
       thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
