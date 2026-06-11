@@ -262,15 +262,19 @@
   .fc { max-width: 1000px; margin: 0 auto; }
   .fc-main {
     position: relative; overflow: hidden; border-radius: 12px;
-    background: #1a1814; aspect-ratio: 16 / 9;
+    background: #1a1814;
+    aspect-ratio: 16 / 9;            /* fallback only — JS sizes the stage to each photo's shape */
+    width: 100%; margin: 0 auto;
     touch-action: pan-y;             /* horizontal drag is ours; vertical scrolls the page */
     cursor: grab; user-select: none; -webkit-user-select: none;
+    transition: width .5s cubic-bezier(.22,.61,.36,1), height .5s cubic-bezier(.22,.61,.36,1);
   }
   .fc-main.is-dragging { cursor: grabbing; }
   .fc-track { display: flex; height: 100%; will-change: transform;
     transition: transform .55s cubic-bezier(.22,.61,.36,1); }
   .fc-main.is-dragging .fc-track { transition: none; }
   .fc-slide { flex: 0 0 100%; width: 100%; height: 100%; }
+  /* each photo fills its frame exactly (the frame already matches its aspect → no crop, no bars) */
   .fc-slide img { width: 100%; height: 100%; object-fit: cover; display: block;
     pointer-events: none; -webkit-user-drag: none; }
 
@@ -303,7 +307,7 @@
   .fc-thumb:hover { opacity: .85; }
   .fc-thumb.active { width: 126px; margin: 0 2px; opacity: 1; }
   @media (max-width: 640px) {
-    .fc-main { aspect-ratio: 4 / 3; border-radius: 10px; }
+    .fc-main { border-radius: 10px; }
     .fc-arrow { width: 38px; height: 38px; }
     .fc-thumbs-row { height: 60px; }
     .fc-thumb { width: 28px; }
@@ -674,7 +678,6 @@
       <div class="flex items-center gap-5 mb-5 sm:mb-6">
         <p class="eyebrow whitespace-nowrap">Recent Frames</p>
         <div class="rule-rust flex-1"></div>
-        <p class="eyebrow text-cream/40 whitespace-nowrap hidden sm:block">Drag to slide · Tap a thumbnail</p>
       </div>
       <div class="rule"></div>
     <div id="frames-carousel" class="fc mt-6" tabindex="0">
@@ -1352,6 +1355,31 @@
     if (!N) return;
     let index = 0;
 
+    // Adaptive stage: the frame takes each photo's own aspect ratio, so portraits get a tall
+    // frame and landscapes a wide one — every image fills its frame flush (no crop, no bars).
+    const aspects = new Array(N).fill(null);
+    function sizeStage() {
+      const a = aspects[index] || (16 / 9);                  // fallback until the photo loads
+      const containerW = root.clientWidth || main.clientWidth || 1;
+      const maxH = Math.min(window.innerHeight * 0.72, 660); // keep tall portraits in view
+      let w = containerW, h = w / a;
+      if (h > maxH) { h = maxH; w = h * a; }                 // cap height → narrower, centered frame
+      main.style.width  = Math.round(w) + 'px';
+      main.style.height = Math.round(h) + 'px';
+    }
+    slides.forEach((s, i) => {
+      const img = s.querySelector('img');
+      if (!img) return;
+      img.loading = 'eager';                                 // need real dimensions to size the stage
+      const grab = () => {
+        if (!img.naturalWidth) return;
+        aspects[i] = img.naturalWidth / img.naturalHeight;
+        if (i === index) sizeStage();
+      };
+      if (img.complete) grab();
+      img.addEventListener('load', grab);
+    });
+
     function centerThumb() {
       const t = thumbs[index];
       if (!t) return;
@@ -1359,6 +1387,7 @@
       thumbsWrap.scrollTo({ left: target, behavior: 'smooth' });
     }
     function render() {
+      sizeStage();
       track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
       thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
       prevBtn.disabled = index === 0;
