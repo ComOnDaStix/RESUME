@@ -257,28 +257,58 @@
 
   .video-tile video { background: #000; }
 
-  /* hero scroller, JS-driven auto-scroll with native horizontal scroll + drag-to-slide */
-  #hero-scroller {
-    /* NOT a native scroll container — the marquee is driven by transform on the track.
-       overflow:hidden + no horizontal scroll means iOS can never trap a vertical finger
-       gesture here; vertical swipes scroll the page normally. */
-    overflow: hidden;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: pan-y;
+  /* Recent Frames — big-stage carousel with an expanding thumbnail rail.
+     Browse by dragging the stage, the ‹ › arrows, or tapping a thumbnail. */
+  .fc { max-width: 1000px; margin: 0 auto; }
+  .fc-main {
+    position: relative; overflow: hidden; border-radius: 12px;
+    background: #1a1814; aspect-ratio: 16 / 9;
+    touch-action: pan-y;             /* horizontal drag is ours; vertical scrolls the page */
+    cursor: grab; user-select: none; -webkit-user-select: none;
   }
-  #hero-scroller::-webkit-scrollbar { display: none; }
-  #hero-scroller.is-dragging { cursor: grabbing; }
-  #hero-scroller.is-dragging .hero-tile { pointer-events: none; }
-  .hero-scroll-track { will-change: transform; }
-  .hero-scroll-mask {
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
-            mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  .fc-main.is-dragging { cursor: grabbing; }
+  .fc-track { display: flex; height: 100%; will-change: transform;
+    transition: transform .55s cubic-bezier(.22,.61,.36,1); }
+  .fc-main.is-dragging .fc-track { transition: none; }
+  .fc-slide { flex: 0 0 100%; width: 100%; height: 100%; }
+  .fc-slide img { width: 100%; height: 100%; object-fit: cover; display: block;
+    pointer-events: none; -webkit-user-drag: none; }
+
+  .fc-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 9999px; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,.92); color: #0E0E0E; border: 0;
+    box-shadow: 0 8px 22px -8px rgba(0,0,0,.6);
+    opacity: .78; cursor: pointer;
+    transition: opacity .2s, transform .2s, background-color .2s;
   }
-  .hero-tile { transition: transform .5s cubic-bezier(.2,.8,.2,1), filter .5s; cursor: zoom-in; }
-  .hero-tile:hover { transform: translateY(-4px); filter: brightness(1.08); }
-  #hero-scroller.is-dragging .hero-tile:hover { transform: none; filter: none; }
+  .fc-arrow:hover { opacity: 1; background: #fff; }
+  .fc-arrow:active { transform: translateY(-50%) scale(.9); }
+  .fc-arrow:disabled { opacity: .32; cursor: not-allowed; box-shadow: none; }
+  .fc-prev { left: 16px; } .fc-next { right: 16px; }
+  .fc-arrow svg { width: 22px; height: 22px; display: block; }
+
+  .fc-thumbs { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  .fc-thumbs::-webkit-scrollbar { display: none; }
+  .fc-thumbs-row { display: flex; gap: 4px; height: 80px; width: max-content; padding: 2px; }
+  .fc-thumb {
+    position: relative; flex: 0 0 auto; height: 100%; width: 36px;
+    overflow: hidden; border-radius: 5px; padding: 0; border: 0; background: none;
+    cursor: pointer; opacity: .5;
+    transition: width .3s ease-out, margin .3s ease-out, opacity .3s;
+  }
+  .fc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block;
+    pointer-events: none; -webkit-user-drag: none; }
+  .fc-thumb:hover { opacity: .85; }
+  .fc-thumb.active { width: 126px; margin: 0 2px; opacity: 1; }
+  @media (max-width: 640px) {
+    .fc-main { aspect-ratio: 4 / 3; border-radius: 10px; }
+    .fc-arrow { width: 38px; height: 38px; }
+    .fc-thumbs-row { height: 60px; }
+    .fc-thumb { width: 28px; }
+    .fc-thumb.active { width: 96px; }
+  }
 
   /* Category tile */
   .cat-tile { background: #F2E9CD; color: #0E0E0E; padding: 18px; display: block; }
@@ -436,8 +466,6 @@
   /* SVG noise filters composite on every paint — drop them */
   body.is-scrolling::after,
   body.is-scrolling .img-frame::after { display: none !important; }
-  /* Tile hover transitions and the marquee's per-frame work shouldn't run during nav */
-  body.is-scrolling .hero-tile { transition: none !important; }
   body.is-scrolling .matted { box-shadow: none !important; }
 
   /* Fullscreen menu overlay */
@@ -641,37 +669,47 @@
       <p class="eyebrow whitespace-nowrap fade-up" style="animation-delay: 1.4s;">Concept · Capture · Delivery</p>
     </div>
 
-    <!-- horizontal hero header + auto-scrolling marquee, framed like a filmstrip -->
+    <!-- Recent Frames — horizontal scroll area (scroll / drag the bar / arrows) -->
     <div class="mt-24 sm:mt-36 lg:mt-48 fade-up fade-up-5">
       <div class="flex items-center gap-5 mb-5 sm:mb-6">
         <p class="eyebrow whitespace-nowrap">Recent Frames</p>
         <div class="rule-rust flex-1"></div>
-        <p class="eyebrow text-cream/40 whitespace-nowrap hidden sm:block">Click to enlarge · Drag to slide</p>
+        <p class="eyebrow text-cream/40 whitespace-nowrap hidden sm:block">Drag to slide · Tap a thumbnail</p>
       </div>
       <div class="rule"></div>
-    <div id="hero-scroller" class="hero-scroll-mask relative w-full overflow-hidden py-8 sm:py-10">
-      <div class="hero-scroll-track flex gap-5 sm:gap-6 w-max">
-        <!-- set A -->
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <!-- set B (duplicate for seamless loop) -->
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></div>
-        <div class="hero-tile img-frame flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] rounded-sm" aria-hidden="true"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></div>
+    <div id="frames-carousel" class="fc mt-6" tabindex="0">
+      <div class="fc-main">
+        <div class="fc-track">
+          <div class="fc-slide"><img src="Assests/web/M1-2.jpg" alt="" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></div>
+          <div class="fc-slide"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></div>
+        </div>
+        <button type="button" class="fc-arrow fc-prev" aria-label="Previous frame">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button type="button" class="fc-arrow fc-next" aria-label="Next frame">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+      <div class="fc-thumbs">
+        <div class="fc-thumbs-row">
+          <button type="button" class="fc-thumb" data-i="0"><img src="Assests/web/M1-2.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="1"><img src="Assests/web/car shoot-02.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="2"><img src="Assests/web/Aa FIlm-4.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="3"><img src="Assests/web/1-17-23-50.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="4"><img src="Assests/web/sam 11-8-24-13.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="5"><img src="Assests/web/02-06-25 Film-07.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="6"><img src="Assests/web/Aa FIlm-18.jpg" alt="" loading="lazy" decoding="async"/></button>
+          <button type="button" class="fc-thumb" data-i="7"><img src="Assests/web/hunterswedding-34.jpg" alt="" loading="lazy" decoding="async"/></button>
+        </div>
       </div>
     </div>
-      <div class="rule"></div>
+      <div class="rule mt-6"></div>
     </div>
   </div>
 </section>
@@ -1299,98 +1337,79 @@
   }, { threshold: 0.05, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('.fade-on-view').forEach(el => fadeObserver.observe(el));
 
-  // ── Hero scroller: auto-scroll with hover-pause, native scroll, click-drag ──
+  // ── Recent Frames: big-stage carousel with an expanding thumbnail rail ──
   (function(){
-    const scroller = document.getElementById('hero-scroller');
-    if (!scroller) return;
-    const track = scroller.querySelector('.hero-scroll-track');
-    if (!track) return;
+    const root = document.getElementById('frames-carousel');
+    if (!root) return;
+    const main   = root.querySelector('.fc-main');
+    const track  = root.querySelector('.fc-track');
+    const slides = Array.from(root.querySelectorAll('.fc-slide'));
+    const thumbsWrap = root.querySelector('.fc-thumbs');
+    const thumbs = Array.from(root.querySelectorAll('.fc-thumb'));
+    const prevBtn = root.querySelector('.fc-prev');
+    const nextBtn = root.querySelector('.fc-next');
+    const N = slides.length;
+    if (!N) return;
+    let index = 0;
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const speed = 1.6; // px per frame (~96 px/sec at 60fps)
-    let isHovering = false;
-    let isDragging = false;
-    let dragMoved = false;
-    let dragStartX = 0;
-    let dragStartOffset = 0;
-    let offset = 0; // current translateX magnitude (px the track is shifted left)
-
-    function half() { return (track.scrollWidth / 2) || 1; } // width of one set (A == B)
-    function apply() { track.style.transform = 'translate3d(' + (-offset) + 'px,0,0)'; }
-
-    function tick() {
-      const pageScrolling = document.body.classList.contains('is-scrolling');
-      if (!reduced && !isHovering && !isDragging && !pageScrolling) {
-        offset += speed;
-      }
-      const h = half();
-      if (offset >= h) offset -= h;        // seamless wrap using the duplicated set B
-      else if (offset < 0) offset += h;
-      apply();
-      requestAnimationFrame(tick);
+    function centerThumb() {
+      const t = thumbs[index];
+      if (!t) return;
+      const target = t.offsetLeft - (thumbsWrap.clientWidth / 2) + (t.offsetWidth / 2);
+      thumbsWrap.scrollTo({ left: target, behavior: 'smooth' });
     }
-    requestAnimationFrame(tick);
+    function render() {
+      track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
+      thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === N - 1;
+      centerThumb();
+    }
+    function go(i) { index = Math.max(0, Math.min(N - 1, i)); render(); }
 
-    // Hover pause (desktop)
-    scroller.addEventListener('mouseenter', () => { isHovering = true; });
-    scroller.addEventListener('mouseleave', () => { isHovering = false; isDragging = false; scroller.classList.remove('is-dragging'); });
-
-    // Touch: drag horizontally to scrub the marquee, swipe vertically to scroll the page.
-    // touch-action: pan-y reserves vertical panning for the browser, so a horizontal
-    // touchmove is ours to handle. Axis-lock on the first move so a vertical scroll is
-    // never mistaken for a carousel drag (and vice-versa).
-    let touchHoldTimer = null;
-    let tStartX = 0, tStartY = 0, tStartOffset = 0, tAxis = null;
-    scroller.addEventListener('touchstart', (e) => {
-      isHovering = true;
-      clearTimeout(touchHoldTimer);
-      const t = e.touches[0];
-      tStartX = t.clientX; tStartY = t.clientY;
-      tStartOffset = offset;
-      tAxis = null;
-      dragMoved = false;
-    }, { passive: true });
-    scroller.addEventListener('touchmove', (e) => {
-      const t = e.touches[0];
-      const dx = t.clientX - tStartX;
-      const dy = t.clientY - tStartY;
-      if (!tAxis && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
-        tAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-      }
-      if (tAxis === 'x') {
-        e.preventDefault();              // own this gesture — move the marquee with the finger
-        dragMoved = true;
-        offset = tStartOffset - dx;      // tick() applies + wraps it next frame
-        apply();
-      }
-      // tAxis === 'y' → do nothing; the browser scrolls the page (pan-y)
-    }, { passive: false });
-    const releaseTouch = () => { clearTimeout(touchHoldTimer); touchHoldTimer = setTimeout(() => { isHovering = false; }, 3500); };
-    scroller.addEventListener('touchend', releaseTouch, { passive: true });
-    scroller.addEventListener('touchcancel', releaseTouch, { passive: true });
-
-    // Mouse drag to scrub (desktop only — touch never sets dragMoved, so taps still open the lightbox)
-    scroller.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse') return;
-      isDragging = true; dragMoved = false;
-      dragStartX = e.pageX; dragStartOffset = offset;
+    prevBtn.addEventListener('click', () => go(index - 1));
+    nextBtn.addEventListener('click', () => go(index + 1));
+    thumbs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  { go(index - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { go(index + 1); e.preventDefault(); }
     });
-    scroller.addEventListener('pointermove', (e) => {
-      if (!isDragging || e.pointerType !== 'mouse') return;
-      const dx = e.pageX - dragStartX;
-      if (Math.abs(dx) > 5) {
-        if (!dragMoved) { dragMoved = true; scroller.classList.add('is-dragging'); }
-        e.preventDefault();
-        offset = dragStartOffset - dx;
+
+    // Drag / swipe the stage. Pointer capture keeps the gesture ours once it goes horizontal;
+    // touch-action:pan-y means a vertical swipe scrolls the page instead (no scroll-trap).
+    let dragging = false, startX = 0, dx = 0, pid = null, captured = false;
+    main.addEventListener('dragstart', (e) => e.preventDefault());   // no native image ghost-drag
+    main.addEventListener('pointerdown', (e) => {
+      dragging = true; captured = false; startX = e.clientX; dx = 0; pid = e.pointerId;
+    });
+    main.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      dx = e.clientX - startX;
+      if (!captured && Math.abs(dx) > 4) {
+        captured = true;
+        main.classList.add('is-dragging');
+        try { main.setPointerCapture(pid); } catch (_) {}
+      }
+      if (captured) {
+        const w = main.offsetWidth || 1;
+        track.style.transform = 'translate3d(' + (-index * 100 + (dx / w) * 100) + '%,0,0)';
       }
     });
-    window.addEventListener('pointerup', (e) => {
-      if (e.pointerType !== 'mouse') return;
-      if (isDragging) { isDragging = false; scroller.classList.remove('is-dragging'); }
-    });
-    scroller.addEventListener('click', (e) => {
-      if (dragMoved) { e.stopPropagation(); e.preventDefault(); dragMoved = false; }
-    }, true);
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      main.classList.remove('is-dragging');
+      if (pid !== null) { try { main.releasePointerCapture(pid); } catch (_) {} pid = null; }
+      const w = main.offsetWidth || 1;
+      if (Math.abs(dx) > w * 0.18) go(dx < 0 ? index + 1 : index - 1);
+      else render();                                                 // didn't pass threshold → snap back
+      dx = 0;
+    }
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+
+    window.addEventListener('resize', () => { render(); });
+    render();
   })();
 
   // ── "View More" buttons for trimmed galleries ──
@@ -1740,17 +1759,7 @@
       });
     });
 
-    // Hero scroller, dedupe set A / set B (set B is aria-hidden)
-    const heroUnique = Array.from(document.querySelectorAll('#hero-scroller .hero-tile:not([aria-hidden="true"]) img'));
-    document.querySelectorAll('#hero-scroller .hero-tile').forEach(tile => {
-      tile.classList.add('cursor-zoom-in');
-      tile.addEventListener('click', () => {
-        const img = tile.querySelector('img');
-        if (!img) return;
-        const matched = heroUnique.find(u => u.src === img.src) || heroUnique[0];
-        open(matched, heroUnique);
-      });
-    });
+    // (Recent Frames now uses its own big-stage carousel — it browses in place, no lightbox.)
 
     overlay.querySelector('#lb-close').addEventListener('click', close);
     overlay.querySelector('#lb-prev').addEventListener('click', () => render(idx - 1));
