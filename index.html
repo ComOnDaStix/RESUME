@@ -206,12 +206,6 @@
   html.reveal-all .fade-on-view { opacity: 1 !important; transform: none !important; transition: none !important; }
 
   /* Availability card, for hiring managers */
-  .avail {
-    border: 1px solid rgba(199,90,74,.38);
-    background: linear-gradient(180deg, rgba(199,90,74,.075), rgba(199,90,74,.015));
-    padding: 22px 24px;
-  }
-  @media (min-width: 640px) { .avail { padding: 26px 30px; } }
   .avail-dot {
     width: 9px; height: 9px; border-radius: 999px; background: #C75A4A; flex-shrink: 0;
     animation: availPulse 2.4s ease-out infinite;
@@ -221,15 +215,6 @@
     70%  { box-shadow: 0 0 0 9px rgba(199,90,74,0); }
     100% { box-shadow: 0 0 0 0 rgba(199,90,74,0); }
   }
-  .btn-rust {
-    display: inline-flex; align-items: center; gap: 10px;
-    border: 1px solid rgba(199,90,74,.6); padding: 11px 20px;
-    font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 500;
-    color: #F2E9CD; line-height: 1;
-    transition: background-color .25s ease, border-color .25s ease, color .25s ease;
-  }
-  .btn-rust:hover { background-color: rgba(199,90,74,.16); border-color: rgba(199,90,74,.95); color: #fff; }
-
   /* Anchor scroll offset so fixed nav doesn't cover headings (includes notch on iPhone) */
   section[id] { scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px)); }
 
@@ -823,24 +808,6 @@
           I work end to end: concept, capture, delivery. The work ships polished, on brand, and on time. If it's worth shooting, I want to see it.
         </p>
 
-        <!-- Availability, for hiring managers -->
-        <div class="avail mt-10 max-w-2xl fade-on-view">
-          <div class="flex items-center gap-3 mb-3 justify-center lg:justify-start">
-            <span class="avail-dot" aria-hidden="true"></span>
-            <p class="eyebrow-rust">Currently open to full-time brand and content roles</p>
-          </div>
-          <p class="text-[15px] leading-[1.85] text-cream/85 mb-6">
-            Full-time, contract, or freelance. Based in Milwaukee, open to hybrid and remote.
-          </p>
-          <div class="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
-            <a href="Assests/Com-Moussavi-Resume.pdf" download class="btn-rust">
-              <span>Download Résumé</span><span aria-hidden="true">↓</span>
-            </a>
-            <a href="#contact" class="btn-rust">
-              <span>Get in Touch</span><span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
