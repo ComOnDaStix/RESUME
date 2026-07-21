@@ -4,30 +4,41 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0E0E0E" />
-<title>Com, Photographer &amp; Videographer, Milwaukee</title>
-<meta name="description" content="Com, self-taught photographer and videographer based in Milwaukee. Editorial, brand campaigns, portraits, lifestyle, weddings, and video." />
+<title>Com — Brand Content Producer &amp; Photographer, Milwaukee</title>
+<meta name="description" content="Com, brand content producer and photographer in Milwaukee. Brand strategy, social content systems, campaign photography and short-form video. Currently open to full-time brand and content roles." />
 
 <!-- Open Graph / link preview -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://comdotcom.net/" />
-<meta property="og:title" content="Com, Photographer &amp; Videographer, Milwaukee" />
-<meta property="og:description" content="Com, self-taught photographer and videographer based in Milwaukee. Editorial, brand campaigns, portraits, lifestyle, weddings, and video." />
+<meta property="og:title" content="Com — Brand Content Producer &amp; Photographer, Milwaukee" />
+<meta property="og:description" content="Com, brand content producer and photographer in Milwaukee. Brand strategy, social content systems, campaign photography and short-form video. Currently open to full-time brand and content roles." />
 <meta property="og:image" content="https://comdotcom.net/Assests/web/com-og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="COM — Milwaukee self-taught photographer &amp; videographer" />
+<meta property="og:image:alt" content="COM — Milwaukee brand content producer &amp; photographer" />
 <meta property="og:site_name" content="Com" />
 
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Com, Photographer &amp; Videographer, Milwaukee" />
-<meta name="twitter:description" content="Editorial, brand campaigns, portraits, lifestyle, weddings, and video." />
+<meta name="twitter:title" content="Com — Brand Content Producer &amp; Photographer, Milwaukee" />
+<meta name="twitter:description" content="Brand strategy, social content systems, campaign photography and short-form video. Milwaukee." />
 <meta name="twitter:image" content="https://comdotcom.net/Assests/web/com-og-image.png" />
-<meta name="twitter:image:alt" content="COM — Milwaukee self-taught photographer &amp; videographer" />
+<meta name="twitter:image:alt" content="COM — Milwaukee brand content producer &amp; photographer" />
 
 <script>
   // Always start at the top on page load / refresh, no scroll restoration
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  // Reveal-on-scroll is JS-driven, so only hide content when JS is actually alive.
+  // Without this, a blocked or failed script leaves every section at opacity:0, a black page.
+  document.documentElement.className += ' js';
+
+  // Failsafe: the reveal observer lives at the bottom of the body, behind the Tailwind CDN.
+  // On a slow connection or an older phone that can take seconds, so if it hasn't
+  // initialised by now, show everything rather than sit on black.
+  setTimeout(function () {
+    if (!window.__revealReady) document.documentElement.classList.add('reveal-all');
+  }, 1800);
 </script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -81,9 +92,9 @@
   .display-tight { letter-spacing: -0.01em; }
   .script { font-family: 'Caveat', cursive; }
   .eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #8C8472; font-weight: 500; }
-  .eyebrow-rust { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C75A4A; font-weight: 600; }
+  .eyebrow-rust { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #D97663; font-weight: 600; }
   .label-cream { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #F2E9CD; font-weight: 600; }
-  .label-rust  { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #C75A4A; font-weight: 600; }
+  .label-rust  { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #D97663; font-weight: 600; }
 
   /* Section index, small rust-tinted marker at top of each page */
   .section-mark { display: inline-flex; align-items: center; gap: 14px; }
@@ -183,13 +194,41 @@
   @keyframes lineDrawX { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
   .line-draw { transform: scaleX(0); transform-origin: left; animation: lineDrawX .95s cubic-bezier(.7,0,.2,1) forwards; animation-delay: 1.05s; }
 
-  .fade-on-view {
+  .js .fade-on-view {
     opacity: 0;
     transform: translate3d(0, 32px, 0);
     transition: opacity 1.15s cubic-bezier(.16,.84,.3,1), transform 1.15s cubic-bezier(.16,.84,.3,1);
     will-change: opacity, transform;
   }
-  .fade-on-view.in-view { opacity: 1; transform: translate3d(0, 0, 0); }
+  .js .fade-on-view.in-view { opacity: 1; transform: translate3d(0, 0, 0); }
+
+  /* Escape hatch, set by the head watchdog when the observer is too slow to arrive */
+  html.reveal-all .fade-on-view { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+  /* Availability card, for hiring managers */
+  .avail {
+    border: 1px solid rgba(199,90,74,.38);
+    background: linear-gradient(180deg, rgba(199,90,74,.075), rgba(199,90,74,.015));
+    padding: 22px 24px;
+  }
+  @media (min-width: 640px) { .avail { padding: 26px 30px; } }
+  .avail-dot {
+    width: 9px; height: 9px; border-radius: 999px; background: #C75A4A; flex-shrink: 0;
+    animation: availPulse 2.4s ease-out infinite;
+  }
+  @keyframes availPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(199,90,74,.55); }
+    70%  { box-shadow: 0 0 0 9px rgba(199,90,74,0); }
+    100% { box-shadow: 0 0 0 0 rgba(199,90,74,0); }
+  }
+  .btn-rust {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(199,90,74,.6); padding: 11px 20px;
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 500;
+    color: #F2E9CD; line-height: 1;
+    transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+  }
+  .btn-rust:hover { background-color: rgba(199,90,74,.16); border-color: rgba(199,90,74,.95); color: #fff; }
 
   /* Anchor scroll offset so fixed nav doesn't cover headings (includes notch on iPhone) */
   section[id] { scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px)); }
@@ -210,7 +249,7 @@
   @media (min-width: 640px) { .cover-pad { padding-top: calc(140px + env(safe-area-inset-top, 0px)); } }
 
   @media (prefers-reduced-motion: reduce) {
-    .fade-up, .stagger > span, .fade-on-view, .com-reveal > span, .curtain-reveal, .line-draw {
+    .fade-up, .stagger > span, .fade-on-view, .com-reveal > span, .curtain-reveal, .line-draw, .avail-dot {
       animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important;
     }
   }
@@ -643,15 +682,15 @@
   </button>
   <nav class="menu-list">
     <ul>
-      <li><a href="#about"      class="menu-item display-tight"><span class="num">01</span><span class="label">About</span></a></li>
-      <li><a href="#highlights" class="menu-item display-tight"><span class="num">02</span><span class="label">Work</span></a></li>
-      <li><a href="#editorial"  class="menu-item display-tight"><span class="num">03</span><span class="label">Editorial</span></a></li>
-      <li><a href="#brands"     class="menu-item display-tight"><span class="num">04</span><span class="label">Brands</span></a></li>
-      <li><a href="#portraits"  class="menu-item display-tight"><span class="num">05</span><span class="label">Portraits</span></a></li>
-      <li><a href="#lifestyle"  class="menu-item display-tight"><span class="num">06</span><span class="label">Lifestyle</span></a></li>
-      <li><a href="#wedding"    class="menu-item display-tight"><span class="num">07</span><span class="label">Wedding</span></a></li>
-      <li><a href="#video"      class="menu-item display-tight"><span class="num">08</span><span class="label">Video</span></a></li>
-      <li><a href="#contact"    class="menu-item display-tight"><span class="num">09</span><span class="label">Contact</span></a></li>
+      <li><a href="#about"       class="menu-item display-tight"><span class="num">01</span><span class="label">About</span></a></li>
+      <li><a href="#brands"      class="menu-item display-tight"><span class="num">02</span><span class="label">Brand Strategy</span></a></li>
+      <li><a href="#highlights"  class="menu-item display-tight"><span class="num">03</span><span class="label">Work</span></a></li>
+      <li><a href="#editorial"   class="menu-item display-tight"><span class="num">04</span><span class="label">Editorial</span></a></li>
+      <li><a href="#portraits"   class="menu-item display-tight"><span class="num">05</span><span class="label">Portraits</span></a></li>
+      <li><a href="#lifestyle"   class="menu-item display-tight"><span class="num">06</span><span class="label">Lifestyle</span></a></li>
+      <li><a href="#video"       class="menu-item display-tight"><span class="num">07</span><span class="label">Video</span></a></li>
+      <li><a href="#wedding"     class="menu-item display-tight"><span class="num">08</span><span class="label">Wedding</span></a></li>
+      <li><a href="#contact"     class="menu-item display-tight"><span class="num">09</span><span class="label">Contact</span></a></li>
     </ul>
   </nav>
 </div>
@@ -665,7 +704,7 @@
   <div class="page-inner">
 
     <div class="flex items-center gap-5 mb-6 fade-up fade-up-1 justify-center lg:justify-start">
-      <p class="eyebrow-rust">Portfolio · Photography &amp; Videography</p>
+      <p class="eyebrow-rust">Brand Content · Photography · Video</p>
     </div>
 
     <!-- big COM + matted portrait -->
@@ -767,12 +806,12 @@
           </div>
           <div>
             <p class="label-rust mb-2">Specialization</p>
-            <p class="text-sm">Editorial · Portrait · Lifestyle · Wedding · Video</p>
+            <p class="text-sm">Brand Content · Social Strategy · Photography · Video</p>
           </div>
         </div>
 
         <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-2xl">
-          I'm Com, a self-taught photographer and videographer based in Milwaukee. I make pictures and films for brands and people I believe in: campaigns, editorial, lookbooks, lifestyle, and weddings.
+          I'm Com, a brand content producer and self-taught photographer based in Milwaukee. I build the content brands grow on, strategy, social systems, campaigns, and the photography and video that fill them.
         </p>
         <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-2xl mt-5">
           I helped scale Unfinished Legacy from a Milwaukee idea into a global clothing brand, and helped grow its flagship store in the Third Ward into a fixture of the city. I've worked with the Brewers, the Bucks, the Milwaukee Art Museum, and lensed a campaign for a candidate running for governor.
@@ -783,99 +822,26 @@
         <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-2xl mt-5">
           I work end to end: concept, capture, delivery. The work ships polished, on brand, and on time. If it's worth shooting, I want to see it.
         </p>
+
+        <!-- Availability, for hiring managers -->
+        <div class="avail mt-10 max-w-2xl fade-on-view">
+          <div class="flex items-center gap-3 mb-3 justify-center lg:justify-start">
+            <span class="avail-dot" aria-hidden="true"></span>
+            <p class="eyebrow-rust">Currently open to full-time brand and content roles</p>
+          </div>
+          <p class="text-[15px] leading-[1.85] text-cream/85 mb-6">
+            Full-time, contract, or freelance. Based in Milwaukee, open to hybrid and remote.
+          </p>
+          <div class="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
+            <a href="Assests/Com-Moussavi-Resume.pdf" download class="btn-rust">
+              <span>Download Résumé</span><span aria-hidden="true">↓</span>
+            </a>
+            <a href="#contact" class="btn-rust">
+              <span>Get in Touch</span><span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═════════════════════════  HIGHLIGHTS  ═════════════════════════ -->
-<section id="highlights" class="page">
-  <div class="page-inner">
-
-    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">02</p>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-      <div class="lg:col-span-5 mobile-center">
-        <h2 class="display text-[64px] sm:text-[112px] lg:text-[140px] fade-on-view">
-          Selected<br/>Work
-        </h2>
-        <p class="text-[15px] text-cream/70 mt-6 max-w-md leading-[1.75] fade-on-view">
-          Five categories. Pick one.
-        </p>
-      </div>
-
-      <div class="lg:col-span-7 grid grid-cols-2 gap-4 sm:gap-5 fade-on-view">
-        <a href="#editorial" class="cat-tile">
-          <div class="cat-head"><span class="label-rust">Editorial</span><span class="dash">/</span><span class="label-rust">01</span></div>
-          <div class="img-frame"><img src="Assests/web/car shoot-02.jpg" alt="Editorial" loading="lazy" decoding="async" /></div>
-        </a>
-        <a href="#portraits" class="cat-tile">
-          <div class="cat-head"><span class="label-rust">Portraits</span><span class="dash">/</span><span class="label-rust">02</span></div>
-          <div class="img-frame"><img src="Assests/web/sam 11-8-24-13.jpg" alt="Portraits" loading="lazy" decoding="async" /></div>
-        </a>
-        <a href="#lifestyle" class="cat-tile">
-          <div class="cat-head"><span class="label-rust">Lifestyle</span><span class="dash">/</span><span class="label-rust">03</span></div>
-          <div class="img-frame"><img src="Assests/web/M1-2.jpg" alt="Lifestyle" style="object-position: center top;" loading="lazy" decoding="async" /></div>
-        </a>
-        <a href="#wedding" class="cat-tile">
-          <div class="cat-head"><span class="label-rust">Wedding</span><span class="dash">/</span><span class="label-rust">04</span></div>
-          <div class="img-frame"><img src="Assests/web/hunterswedding-34.jpg" alt="Wedding" style="object-position: center 30%;" loading="lazy" decoding="async" /></div>
-        </a>
-        <a href="#video" class="cat-tile cat-tile-wide col-span-2">
-          <div class="cat-head"><span class="label-rust">Video</span><span class="dash">/</span><span class="label-rust">05</span></div>
-          <div class="img-frame"><img src="Assests/web/posters/Leons 4k.mp4.jpg" alt="Video" loading="lazy" decoding="async" /></div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═════════════════════════  EDITORIAL  ═════════════════════════ -->
-<section id="editorial" class="page">
-  <div class="page-inner">
-
-    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">03</p>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
-      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
-        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Editorial</h2>
-      </div>
-      <div class="lg:col-span-5 fade-on-view mobile-center">
-        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
-          Brand campaigns and editorial for the people building things in Milwaukee and beyond. Editorial is more than the product, it's how the brand looks, feels, and lives in the world.
-        </p>
-        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
-        <p class="label-rust mb-2">Brand Credits</p>
-        <p class="text-sm text-cream leading-relaxed">
-          Unfinished Legacy &nbsp; · &nbsp; Milwaukee Brewers &nbsp; · &nbsp; Milwaukee Bucks &nbsp; · &nbsp; Milwaukee Art Museum &nbsp; · &nbsp; Campaign for Governor
-        </p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-02.jpg" alt="Car shoot, UL" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/02-06-25 Film-07.jpg" alt="Window Light" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/1-17-23-50.jpg" alt="UL, van in snow" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/7-20-24 flagship red tee-74.jpg" alt="Flagship red tee" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/02-06-25 Film-28.jpg" alt="Studio Light" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/000017510036.JPEG" alt="UL, BMW" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-28-24 Film-01.jpg" alt="UL editorial, pair" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/8-5-24 Film-146.jpg" alt="On the dock" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/13.jpg" alt="UL, group, night" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/000010440005.jpg" alt="Twilight, UL" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/joy racer hoodies. 0.JPG" alt="Joy Racer hoodies" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-33.jpg" alt="Chi Lookbook 33" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-37.jpg" alt="Chi Lookbook 37" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-18.jpg" alt="Chi Lookbook 18" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-08.jpg" alt="Car shoot, close" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-12.jpg" alt="Car shoot, couple" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/12-11-24 Aaron-9.jpg" alt="Aaron, Milwaukee shop" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/5-14-24 film-14.jpg" alt="UL film" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/7-2-24 film-19.jpg" alt="UL film 19" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/22.JPG" alt="UL, Legacy tee in the field" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/2.jpg" alt="UL, dock, three tees" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/5-14-24 film-24.jpg" alt="UL film, no. 24" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/12-19-23 film-02.jpg" alt="UL film, winter" loading="lazy" decoding="async"/></a>
     </div>
   </div>
 </section>
@@ -884,7 +850,7 @@
 <section id="brands" class="page">
   <div class="page-inner">
 
-    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">04</p>
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">02</p>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-16 sm:mb-20 items-start">
       <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
@@ -892,13 +858,70 @@
       </div>
       <div class="lg:col-span-5 fade-on-view mobile-center">
         <p class="text-[15px] sm:text-base leading-[1.85] text-cream/85 max-w-xl mt-2">
-          Other than shooting, I help brands look like themselves online. Feed direction, campaign rollouts, curation, social strategy. The two pages below are my longest case study, a Milwaukee idea I helped grow into a global clothing brand.
+          I build the content systems brands run on. Feed direction, campaign rollouts, curation, social strategy, and the photography and video that fill it. Below is my longest case study, a Milwaukee idea I helped grow into a global brand, plus the contracts I took on in 2026.
         </p>
         <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
         <p class="label-rust mb-2">Roles</p>
         <p class="text-sm text-cream leading-relaxed">
           Brand Strategist &nbsp;·&nbsp; Curation &nbsp;·&nbsp; Photography &nbsp;·&nbsp; Creative Direction
         </p>
+      </div>
+    </div>
+
+    <!-- ───── CASE STUDY, UNFINISHED LEGACY ───── -->
+    <div class="mb-16 sm:mb-24 fade-on-view mobile-center">
+      <div class="flex items-center gap-5 mb-7">
+        <p class="label-rust whitespace-nowrap">Case Study</p>
+        <div class="rule-rust flex-1"></div>
+      </div>
+
+      <h3 class="display text-[40px] sm:text-[60px] lg:text-[76px] leading-[0.95] mb-3">Unfinished Legacy</h3>
+      <p class="eyebrow-rust mb-10">8 Years &nbsp;·&nbsp; Idea to Global Brand</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-9 max-w-[1150px] mb-12">
+        <div>
+          <p class="label-rust mb-3">The Problem</p>
+          <p class="text-[15px] leading-[1.85] text-cream/85">
+            A Milwaukee startup brand that needed to look bigger than it was, and a flagship store that needed feet through the door.
+          </p>
+        </div>
+        <div>
+          <p class="label-rust mb-3">My Role</p>
+          <p class="text-[15px] leading-[1.85] text-cream/85">
+            Brand strategy, creative direction, photography, video, and both Instagram accounts, the global page and the storefront page, plus running the store itself.
+          </p>
+        </div>
+        <div>
+          <p class="label-rust mb-3">What I Did</p>
+          <p class="text-[15px] leading-[1.85] text-cream/85">
+            Built the content system behind every drop and campaign, shot and edited the assets, ran the calendars, and translated the online brand into a Third Ward retail experience.
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-[1150px]">
+        <div class="flex items-center gap-5 mb-6">
+          <p class="label-rust whitespace-nowrap">Results</p>
+          <div class="rule-rust flex-1"></div>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+          <div>
+            <p class="display display-tight text-[44px] sm:text-[64px] leading-[0.9]">171K</p>
+            <p class="text-[13px] text-cream/60 mt-2 leading-snug">Followers, main page</p>
+          </div>
+          <div>
+            <p class="display display-tight text-[44px] sm:text-[64px] leading-[0.9]">22.2K</p>
+            <p class="text-[13px] text-cream/60 mt-2 leading-snug">Followers, flagship</p>
+          </div>
+          <div>
+            <p class="display display-tight text-[30px] sm:text-[40px] lg:text-[44px] leading-[1.0]">Proclamation</p>
+            <p class="text-[13px] text-cream/60 mt-2 leading-snug">Official recognition for the brand</p>
+          </div>
+          <div>
+            <p class="display display-tight text-[44px] sm:text-[64px] leading-[0.9]">1</p>
+            <p class="text-[13px] text-cream/60 mt-2 leading-snug">Storefront that became a fixture of the neighborhood</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -941,8 +964,8 @@
           <span class="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #2B2A26 0%, #0E0E0E 100%); border: 1px solid rgba(199,90,74,.55); box-shadow: 0 18px 40px -18px rgba(0,0,0,.7);">
             <span class="display text-cream text-xl sm:text-2xl tracking-tight">F</span>
           </span>
-          <span class="block">
-            <span class="block display text-2xl sm:text-3xl group-hover:text-rust transition-colors">@unfinishedlegacy_flagship</span>
+          <span class="block min-w-0">
+            <span class="block display text-xl sm:text-3xl break-all group-hover:text-rust transition-colors">@unfinishedlegacy_flagship</span>
             <span class="block text-[13px] text-cream/60 mt-1">UL Flagship, Milwaukee Third Ward</span>
           </span>
         </a>
@@ -967,6 +990,162 @@
 
     </div>
 
+
+    <!-- ───── 2026 CONTRACTS ───── -->
+    <div class="mt-20 sm:mt-28 fade-on-view mobile-center">
+      <div class="flex items-center gap-5 mb-10">
+        <p class="label-rust whitespace-nowrap">2026 Contracts</p>
+        <div class="rule-rust flex-1"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20">
+
+        <!-- Fran Hong -->
+        <div>
+          <h3 class="display text-[32px] sm:text-[44px] leading-[1.0] mb-2">Fran Hong</h3>
+          <p class="eyebrow-rust mb-8">Personal Brand, Governor Campaign &nbsp;·&nbsp; Jan–Apr 2026</p>
+          <div class="space-y-6 max-w-xl">
+            <div>
+              <p class="label-rust mb-2">The Problem</p>
+              <p class="text-[15px] leading-[1.85] text-cream/85">
+                A candidate for governor who needed a personal brand people could connect with, not just a campaign that ran ads.
+              </p>
+            </div>
+            <div>
+              <p class="label-rust mb-2">My Role</p>
+              <p class="text-[15px] leading-[1.85] text-cream/85">
+                Creative direction, photography, and short-form video across the campaign's social presence.
+              </p>
+            </div>
+            <div>
+              <p class="label-rust mb-2">What I Did</p>
+              <p class="text-[15px] leading-[1.85] text-cream/85">
+                Built the content approach around the candidate's own voice, testimonials, issue-driven reels, and portrait work, and shipped it on a campaign calendar from January through April.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Source TEN -->
+        <div>
+          <h3 class="display text-[32px] sm:text-[44px] leading-[1.0] mb-2">Source TEN</h3>
+          <p class="eyebrow-rust mb-8">25-Reel Series &nbsp;·&nbsp; 2026</p>
+          <div class="space-y-6 max-w-xl">
+            <div>
+              <p class="label-rust mb-2">The Problem</p>
+              <p class="text-[15px] leading-[1.85] text-cream/85">
+                A brand that needed consistent short-form output on a schedule, not one-off posts whenever there was budget.
+              </p>
+            </div>
+            <div>
+              <p class="label-rust mb-2">My Role</p>
+              <p class="text-[15px] leading-[1.85] text-cream/85">
+                Concept, direction, shooting, and edit on a contracted series.
+              </p>
+            </div>
+            <div>
+              <p class="label-rust mb-2">What I Did</p>
+              <p class="text-[15px] leading-[1.85] text-cream/85">
+                Delivered 25 reels end to end, scripted the series arc, shot in batches to keep the look consistent, and handed over ready-to-post cuts sized for the feed.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  HIGHLIGHTS  ═════════════════════════ -->
+<section id="highlights" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">03</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-5 mobile-center">
+        <h2 class="display text-[64px] sm:text-[112px] lg:text-[140px] fade-on-view">
+          Selected<br/>Work
+        </h2>
+        <p class="text-[15px] text-cream/70 mt-6 max-w-md leading-[1.75] fade-on-view">
+          Five categories. Pick one.
+        </p>
+      </div>
+
+      <div class="lg:col-span-7 grid grid-cols-2 gap-4 sm:gap-5 fade-on-view">
+        <a href="#editorial" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Editorial</span><span class="dash">/</span><span class="label-rust">01</span></div>
+          <div class="img-frame"><img src="Assests/web/car shoot-02.jpg" alt="Editorial" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#portraits" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Portraits</span><span class="dash">/</span><span class="label-rust">02</span></div>
+          <div class="img-frame"><img src="Assests/web/sam 11-8-24-13.jpg" alt="Portraits" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#lifestyle" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Lifestyle</span><span class="dash">/</span><span class="label-rust">03</span></div>
+          <div class="img-frame"><img src="Assests/web/M1-2.jpg" alt="Lifestyle" style="object-position: center top;" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#video" class="cat-tile">
+          <div class="cat-head"><span class="label-rust">Video</span><span class="dash">/</span><span class="label-rust">04</span></div>
+          <div class="img-frame"><img src="Assests/web/posters/Leons 4k.mp4.jpg" alt="Video" loading="lazy" decoding="async" /></div>
+        </a>
+        <a href="#wedding" class="cat-tile cat-tile-wide col-span-2">
+          <div class="cat-head"><span class="label-rust">Wedding</span><span class="dash">/</span><span class="label-rust">05</span></div>
+          <div class="img-frame"><img src="Assests/web/hunterswedding-34.jpg" alt="Wedding" style="object-position: center 30%;" loading="lazy" decoding="async" /></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════  EDITORIAL  ═════════════════════════ -->
+<section id="editorial" class="page">
+  <div class="page-inner">
+
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">04</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Editorial</h2>
+      </div>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
+          Brand campaigns and editorial for the people building things in Milwaukee and beyond. Editorial is more than the product, it's how the brand looks, feels, and lives in the world.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Brand Credits</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Unfinished Legacy &nbsp; · &nbsp; Milwaukee Brewers &nbsp; · &nbsp; Milwaukee Bucks &nbsp; · &nbsp; Milwaukee Art Museum &nbsp; · &nbsp; Campaign for Governor
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-02.jpg" alt="Car shoot, UL" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/02-06-25 Film-07.jpg" alt="Window Light" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/1-17-23-50.jpg" alt="UL, van in snow" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/7-20-24 flagship red tee-74.jpg" alt="Flagship red tee" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/02-06-25 Film-28.jpg" alt="Studio Light" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/000017510036.JPEG" alt="UL, BMW" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-28-24 Film-01.jpg" alt="UL editorial, pair" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/8-5-24 Film-146.jpg" alt="On the dock" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/13.jpg" alt="UL, group, night" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/000010440005.jpg" alt="Twilight, UL" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/joy racer hoodies. 0.JPG" alt="Joy Racer hoodies" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-33.jpg" alt="Chi Lookbook 33" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-37.jpg" alt="Chi Lookbook 37" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/9-25-24 Chi LookBook-18.jpg" alt="Chi Lookbook 18" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-08.jpg" alt="Car shoot, close" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/car shoot-12.jpg" alt="Car shoot, couple" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/12-11-24 Aaron-9.jpg" alt="Aaron, Milwaukee shop" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/5-14-24 film-14.jpg" alt="UL film" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/7-2-24 film-19.jpg" alt="UL film 19" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/22.JPG" alt="UL, Legacy tee in the field" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/2.jpg" alt="UL, dock, three tees" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/5-14-24 film-24.jpg" alt="UL film, no. 24" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/12-19-23 film-02.jpg" alt="UL film, winter" loading="lazy" decoding="async"/></a>
+    </div>
   </div>
 </section>
 
@@ -1062,75 +1241,90 @@
   </div>
 </section>
 
-<!-- ═════════════════════════  WEDDING  ═════════════════════════ -->
-<section id="wedding" class="page">
-  <div class="page-inner">
-
-    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">07</p>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
-      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
-        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Wedding</h2>
-      </div>
-      <div class="lg:col-span-5 fade-on-view mobile-center">
-        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
-          The quiet between vows. The arm pulling closer. A walk through the garden when no one's watching. Weddings get the same patient eye as everything else, let me document the day the way you'll want to remember it.
-        </p>
-        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
-        <p class="label-rust mb-2">Booking</p>
-        <p class="text-sm text-cream leading-relaxed">
-          Travel welcome &nbsp;·&nbsp; Private commissions
-        </p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/p3.jpg" alt="Wedding, groomsmen group, Tuscan balcony" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/34.jpg" alt="Spanns, kiss on the stairs, veil" style="object-position: center 30%;" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-29.jpg" alt="Spanns, balcony kiss, Tuscan hills" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-47.jpg" alt="Spanns, bouquet & veil, courtyard" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-2.jpg" alt="Spanns, ring on invitation, Italy" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-49.jpg" alt="Spanns, kiss by the pool, Italy" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-30.jpg" alt="Spanns, reception menu" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-31.jpg" alt="Spanns, reception table, candles" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-34.jpg" alt="Hunter's wedding" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam%2011-8-24-26.jpg" alt="Sam, couple" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-36.jpg" alt="Spanns, cake cutting" loading="lazy" decoding="async"/></a>
-      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam%2011-8-24-41.jpg" alt="Sam, landscape" loading="lazy" decoding="async"/></a>
-    </div>
-  </div>
-</section>
-
 <!-- ═════════════════════════  VIDEO  ═════════════════════════ -->
 <section id="video" class="page">
   <div class="page-inner">
 
-    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">08</p>
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">07</p>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-12 sm:mb-16 items-start">
       <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
-        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Video</h2>
+        <h2 class="display text-[52px] sm:text-[80px] lg:text-[68px] xl:text-[88px] leading-[0.95]">Short-Form<br/>&amp; Brand<br/>Video</h2>
       </div>
       <div class="lg:col-span-5 fade-on-view mobile-center">
         <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
-          Brand spots, campaign cuts, documentary, lifestyle. Click any tile to play.
+          Reels and short-form built for the feed, plus brand spots, campaign cuts, and documentary work. Click any tile to play.
         </p>
         <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
-        <p class="label-rust mb-2">Format</p>
+        <p class="label-rust mb-2">Formats</p>
         <p class="text-sm text-cream leading-relaxed">
-          Landscape &nbsp;·&nbsp; Vertical &nbsp;·&nbsp; 4K &nbsp;·&nbsp; Reels
+          9:16 Reels &nbsp;·&nbsp; Short-Form &nbsp;·&nbsp; Landscape &nbsp;·&nbsp; 4K
         </p>
       </div>
     </div>
 
-    <!-- ───── MOST RECENT ───── -->
+    <!-- ───── IG VERTICAL GROUP (9:16), leads the section ───── -->
     <div class="mb-16 sm:mb-20">
-      <div class="flex items-center gap-5 mb-6">
-        <p class="label-rust whitespace-nowrap">Most Recent</p>
-        <div class="rule-rust flex-1"></div>
+      <p class="label-rust mb-6">Vertical · Reels &amp; Short-Form</p>
+
+      <!-- Row 1: 3 verticals -->
+      <div class="grid grid-cols-3 gap-4 sm:gap-6 mb-6 lg:mb-8">
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/tre Norman final.mp4.jpg">
+              <source src="Assests/web/videos/tre Norman final.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Tre Norman</p>
+            <p class="label-rust hidden sm:block">Portrait</p>
+          </figcaption>
+        </figure>
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/11-change-artist.mp4.jpg">
+              <source src="Assests/web/videos/11-change-artist.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Change Artist</p>
+            <p class="label-rust hidden sm:block">Reel</p>
+          </figcaption>
+        </figure>
+        <figure class="video-tile fade-on-view">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/HONG TESTIMONIAL 2.mp4.jpg">
+              <source src="Assests/web/videos/HONG TESTIMONIAL 2.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Hong</p>
+            <p class="label-rust hidden sm:block">Testimonial</p>
+          </figcaption>
+        </figure>
       </div>
 
-      <figure class="video-tile max-w-[1200px] mx-auto fade-on-view">
+      <!-- Row 2: single vertical centered -->
+      <div class="flex justify-center">
+        <figure class="video-tile fade-on-view w-full max-w-[360px]">
+          <div class="img-frame aspect-[9/16]">
+            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/Mex.Fiesta.mp4 Final.mp4.jpg">
+              <source src="Assests/web/videos/Mex.Fiesta.mp4 Final.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
+            <p class="display text-base sm:text-lg">Mex Fiesta</p>
+            <p class="label-rust hidden sm:block">Brand</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- ───── LANDSCAPE GROUP (4:3 + 16:9) ───── -->
+    <div>
+      <p class="label-rust mb-6">Landscape · Brand &amp; Documentary</p>
+
+      <figure class="video-tile mb-6 lg:mb-8 max-w-[1200px] mx-auto fade-on-view">
         <video class="block w-full h-auto bg-ink" preload="metadata" controls playsinline poster="Assests/web/posters/Blue Hour Coffee.mp4.jpg">
           <source src="Assests/web/videos/Blue Hour Coffee.mp4" type="video/mp4" />
         </video>
@@ -1139,11 +1333,7 @@
           <p class="label-rust">New</p>
         </figcaption>
       </figure>
-    </div>
 
-    <!-- ───── LANDSCAPE GROUP (4:3 + 16:9) ───── -->
-    <div class="mb-16 sm:mb-20">
-      <p class="label-rust mb-6">Landscape · Brand &amp; Documentary</p>
 
       <!-- Leon's HERO 4:3 -->
       <figure class="video-tile mb-6 lg:mb-8 max-w-[1200px] mx-auto fade-on-view">
@@ -1219,62 +1409,44 @@
         </figcaption>
       </figure>
     </div>
+  </div>
+</section>
 
-    <!-- ───── IG VERTICAL GROUP (9:16) ───── -->
-    <div>
-      <p class="label-rust mb-6">Vertical · Reels &amp; Portrait</p>
+<!-- ═════════════════════════  WEDDING  ═════════════════════════ -->
+<section id="wedding" class="page">
+  <div class="page-inner">
 
-      <!-- Row 1: 3 verticals -->
-      <div class="grid grid-cols-3 gap-4 sm:gap-6 mb-6 lg:mb-8">
-        <figure class="video-tile fade-on-view">
-          <div class="img-frame aspect-[9/16]">
-            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/tre Norman final.mp4.jpg">
-              <source src="Assests/web/videos/tre Norman final.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
-            <p class="display text-base sm:text-lg">Tre Norman</p>
-            <p class="label-rust hidden sm:block">Portrait</p>
-          </figcaption>
-        </figure>
-        <figure class="video-tile fade-on-view">
-          <div class="img-frame aspect-[9/16]">
-            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/11-change-artist.mp4.jpg">
-              <source src="Assests/web/videos/11-change-artist.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
-            <p class="display text-base sm:text-lg">Change Artist</p>
-            <p class="label-rust hidden sm:block">Reel</p>
-          </figcaption>
-        </figure>
-        <figure class="video-tile fade-on-view">
-          <div class="img-frame aspect-[9/16]">
-            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/HONG TESTIMONIAL 2.mp4.jpg">
-              <source src="Assests/web/videos/HONG TESTIMONIAL 2.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
-            <p class="display text-base sm:text-lg">Hong</p>
-            <p class="label-rust hidden sm:block">Testimonial</p>
-          </figcaption>
-        </figure>
+    <p class="section-mark eyebrow-rust mb-8 fade-on-view mobile-center">08</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 sm:mb-14 items-start">
+      <div class="lg:col-start-2 lg:col-span-5 fade-on-view mobile-center">
+        <h2 class="display text-[64px] sm:text-[96px] lg:text-[120px]">Wedding</h2>
       </div>
-
-      <!-- Row 2: single vertical centered -->
-      <div class="flex justify-center">
-        <figure class="video-tile fade-on-view w-full max-w-[360px]">
-          <div class="img-frame aspect-[9/16]">
-            <video class="w-full h-full object-cover" preload="none" controls playsinline poster="Assests/web/posters/Mex.Fiesta.mp4 Final.mp4.jpg">
-              <source src="Assests/web/videos/Mex.Fiesta.mp4 Final.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="pt-3 flex items-baseline justify-between gap-2">
-            <p class="display text-base sm:text-lg">Mex Fiesta</p>
-            <p class="label-rust hidden sm:block">Brand</p>
-          </figcaption>
-        </figure>
+      <div class="lg:col-span-5 fade-on-view mobile-center">
+        <p class="text-[15px] text-cream/70 leading-[1.85] max-w-xl">
+          The quiet between vows. The arm pulling closer. A walk through the garden when no one's watching. Weddings get the same patient eye as everything else, let me document the day the way you'll want to remember it.
+        </p>
+        <div class="my-7 max-w-md"><div class="rule-rust"></div></div>
+        <p class="label-rust mb-2">Booking</p>
+        <p class="text-sm text-cream leading-relaxed">
+          Travel welcome &nbsp;·&nbsp; Private commissions
+        </p>
       </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 grid-mosaic" data-trim="12">
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/p3.jpg" alt="Wedding, groomsmen group, Tuscan balcony" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/34.jpg" alt="Spanns, kiss on the stairs, veil" style="object-position: center 30%;" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-29.jpg" alt="Spanns, balcony kiss, Tuscan hills" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-47.jpg" alt="Spanns, bouquet & veil, courtyard" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-2.jpg" alt="Spanns, ring on invitation, Italy" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-49.jpg" alt="Spanns, kiss by the pool, Italy" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-30.jpg" alt="Spanns, reception menu" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-31.jpg" alt="Spanns, reception table, candles" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunterswedding-34.jpg" alt="Hunter's wedding" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam%2011-8-24-26.jpg" alt="Sam, couple" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/hunters%20wedding-36.jpg" alt="Spanns, cake cutting" loading="lazy" decoding="async"/></a>
+      <a href="#contact" class="img-frame fade-on-view"><img src="Assests/web/sam%2011-8-24-41.jpg" alt="Sam, landscape" loading="lazy" decoding="async"/></a>
     </div>
   </div>
 </section>
@@ -1292,8 +1464,13 @@
         <div class="rule-rust my-8 max-w-[620px]"></div>
 
         <p class="text-[15px] text-cream/75 max-w-xl leading-[1.85]">
-          Email me for a quote, project rates, or just to talk shop. I get back same week.
+          Email me about a role, a project, or just to talk shop. I get back same week.
         </p>
+
+        <div class="flex items-center gap-3 mt-7 justify-center lg:justify-start">
+          <span class="avail-dot" aria-hidden="true"></span>
+          <p class="eyebrow-rust">Currently open to full-time brand and content roles</p>
+        </div>
 
         <ul class="space-y-3 text-cream mt-10">
           <li class="flex items-baseline gap-4">
@@ -1307,6 +1484,10 @@
           <li class="flex items-baseline gap-4">
             <span class="label-cream text-rust w-24 shrink-0">LinkedIn</span>
             <a class="ulink text-lg sm:text-xl" href="https://www.linkedin.com/in/comeron-moussavi-077547199/" target="_blank" rel="noopener">Comeron Moussavi</a>
+          </li>
+          <li class="flex items-baseline gap-4">
+            <span class="label-cream text-rust w-24 shrink-0">Résumé</span>
+            <a class="ulink text-lg sm:text-xl" href="Assests/Com-Moussavi-Resume.pdf" download>Download PDF</a>
           </li>
         </ul>
 
@@ -1327,12 +1508,13 @@
   </div>
 </section>
 
+
 <!-- ─────────────────────────  FOOTER  ───────────────────────── -->
 <footer class="border-t border-cream/10">
   <div class="px-6 sm:px-10 lg:px-14 py-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
     <div class="flex items-center gap-3 leading-none">
       <span class="display text-xl lowercase">.com</span>
-      <span class="eyebrow">Photographer &amp; Videographer · Milwaukee</span>
+      <span class="eyebrow">Brand Content · Photography · Video · Milwaukee</span>
     </div>
     <div class="text-xs text-mute">© <span id="yr"></span> Com. All images by Com.</div>
   </div>
@@ -1348,6 +1530,9 @@
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Tell the head watchdog the reveal system is live, so it leaves the animations alone
+  window.__revealReady = true;
 
   const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
